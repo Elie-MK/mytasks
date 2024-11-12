@@ -1,29 +1,59 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  Animated,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  ViewToken,
+} from "react-native";
+import React, { useRef, useState } from "react";
 import OnboardingItem from "./OnboardingItem";
 import { ScrollView } from "react-native";
+import OnboardingDot from "./OnboardingDot";
+import { IOnboarding, OnboardingDatas } from "./interface/IOnboarding";
 
 type Props = {};
 
 const OnboardingList = (props: Props) => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const slideRef = useRef<FlatList<IOnboarding>>(null);
+
+  const viewableItemsChanges = ({
+    viewableItems,
+  }: {
+    viewableItems: ViewToken<IOnboarding>[];
+  }) => {
+    setCurrentIndex(viewableItems[0].index!);
+  };
+
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      centerContent
-      style={{ flex: 1 }}
-      horizontal
-      pagingEnabled
-    >
-      <OnboardingItem
-        image={require("../../assets/images/illustration1.png")}
+    <View style={styles.container}>
+      <FlatList
+        data={OnboardingDatas}
+        renderItem={({ item }) => (
+          <OnboardingItem
+            leftText={item.leftText}
+            midleText={item.midleText}
+            rightText={item.rightText}
+            desc={item.desc}
+            image={item.image}
+          />
+        )}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: false }
+        )}
+        onViewableItemsChanged={viewableItemsChanges}
+        keyExtractor={(item) => item.midleText}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled
       />
-      <OnboardingItem
-        image={require("../../assets/images/illustration1.png")}
-      />
-      <OnboardingItem
-        image={require("../../assets/images/illustration1.png")}
-      />
-    </ScrollView>
+      <View>
+        <OnboardingDot datas={OnboardingDatas} scrollX={scrollX} />
+      </View>
+    </View>
   );
 };
 
@@ -31,8 +61,6 @@ export default OnboardingList;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingVertical: 20,
+    flex: 1,
   },
 });
