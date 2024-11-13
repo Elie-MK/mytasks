@@ -4,6 +4,7 @@ import Onboarding from "./screens/Onboarding/Onboarding";
 import { loadFonts } from "./config/fonts";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
+import SignIn from "./screens/Auth/SignIn/SignIn";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,9 +31,10 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Onboarding"
+        initialRouteName="SignIn"
       >
         <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="SignIn" component={SignIn} />
       </Stack.Navigator>
     </NavigationContainer>
   );
