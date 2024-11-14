@@ -2,6 +2,7 @@ import {
   Keyboard,
   Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -41,82 +42,93 @@ const SignInItem = ({
   navigation,
 }: Props) => {
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "android" ? "padding" : "padding"}
-      style={{ flex: 1, backgroundColor: Colors.WHITE }}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={styles.container}>
-          <View>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>Sign In</Text>
-              <Text style={styles.desc}>Sign in to continue using app.</Text>
-            </View>
-
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollViewContent}
+      >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1, justifyContent: "center" }}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
               <View>
-                <Input
-                  isError={errors.emailErrors.length > 0}
-                  title="Email address"
-                  placeholder="Enter your email address"
-                  value={signinInputs.email}
-                  onChangeText={(value) => handleTextInput("email", value)}
-                />
+                <View style={styles.titleContainer}>
+                  <Text style={styles.title}>Sign In</Text>
+                  <Text style={styles.desc}>
+                    Sign in to continue using app.
+                  </Text>
+                </View>
 
                 <View>
-                  {errors.emailErrors.map((error, index) => (
-                    <Text key={index} style={{ color: Colors.RED }}>
-                      {error}
-                    </Text>
-                  ))}
+                  <View>
+                    <Input
+                      isError={errors.emailErrors.length > 0}
+                      title="Email address"
+                      placeholder="Enter your email address"
+                      value={signinInputs.email}
+                      onChangeText={(value) => handleTextInput("email", value)}
+                    />
+
+                    <View>
+                      {errors.emailErrors.map((error, index) => (
+                        <Text key={index} style={{ color: Colors.RED }}>
+                          {error}
+                        </Text>
+                      ))}
+                    </View>
+                  </View>
+
+                  {/* Add password input */}
+                  <View>
+                    <Input
+                      isError={errors.passwordErrors.length > 0}
+                      value={signinInputs.password}
+                      onChangeText={(value) =>
+                        handleTextInput("password", value)
+                      }
+                      isPasswordField
+                      isShowPassword={!showPassword}
+                      handleShowPassword={handleShowPassword}
+                      title="Password"
+                      placeholder="Enter your password"
+                    />
+                  </View>
+
+                  <View>
+                    {errors.passwordErrors.map((error, index) => (
+                      <Text key={index} style={{ color: Colors.RED }}>
+                        {error}
+                      </Text>
+                    ))}
+                  </View>
+                </View>
+                <View style={styles.forgotPasswdContainer}>
+                  <TouchableOpacity>
+                    <Text style={styles.forgotPasswd}>Forgot password?</Text>
+                  </TouchableOpacity>
+                </View>
+                <Button onPress={submit} title="Sign in" />
+              </View>
+              <View style={styles.registerContainer}>
+                <View style={styles.registerTextContainer}>
+                  <Text style={styles.dontHaveAccountText}>
+                    Don't have an account?{" "}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("SignUp")}
+                    activeOpacity={0.5}
+                  >
+                    <Text style={styles.registerText}>Register</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-
-              {/* Add password input */}
-              <View>
-                <Input
-                  isError={errors.passwordErrors.length > 0}
-                  value={signinInputs.password}
-                  onChangeText={(value) => handleTextInput("password", value)}
-                  isPasswordField
-                  isShowPassword={!showPassword}
-                  handleShowPassword={handleShowPassword}
-                  title="Password"
-                  placeholder="Enter your password"
-                />
-              </View>
-
-              <View>
-                {errors.passwordErrors.map((error, index) => (
-                  <Text key={index} style={{ color: Colors.RED }}>
-                    {error}
-                  </Text>
-                ))}
-              </View>
             </View>
-            <View style={styles.forgotPasswdContainer}>
-              <TouchableOpacity>
-                <Text style={styles.forgotPasswd}>Forgot password?</Text>
-              </TouchableOpacity>
-            </View>
-            <Button onPress={submit} title="Sign in" />
-          </View>
-          <View style={styles.registerContainer}>
-            <View style={styles.registerTextContainer}>
-              <Text style={styles.dontHaveAccountText}>
-                Don't have an account?{" "}
-              </Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("SignUp")}
-                activeOpacity={0.5}
-              >
-                <Text style={styles.registerText}>Register</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -125,8 +137,11 @@ export default SignInItem;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.WHITE,
+  },
+  scrollViewContent: {
     marginHorizontal: 20,
-    justifyContent: "center",
+    flex: 1,
   },
   titleContainer: {
     marginBottom: 20,
