@@ -15,6 +15,7 @@ import { Colors } from "../../../constants/Color";
 import Input from "../../../component/ui/Input";
 import Button from "../../../component/ui/Button";
 import { ISignin } from "../../../interfaces/ISignin";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
 type Props = {
   showPassword: boolean;
@@ -26,6 +27,7 @@ type Props = {
     emailErrors: string[];
     passwordErrors: string[];
   };
+  navigation: NavigationProp<ParamListBase>;
 };
 
 const SignInItem = ({
@@ -35,9 +37,8 @@ const SignInItem = ({
   handleTextInput,
   signinInputs,
   errors,
+  navigation,
 }: Props) => {
-  console.log(errors);
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "android" ? "padding" : "padding"}
@@ -104,7 +105,10 @@ const SignInItem = ({
               <Text style={styles.dontHaveAccountText}>
                 Don't have an account?{" "}
               </Text>
-              <TouchableOpacity activeOpacity={0.5}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("SignUp")}
+                activeOpacity={0.5}
+              >
                 <Text style={styles.registerText}>Register</Text>
               </TouchableOpacity>
             </View>

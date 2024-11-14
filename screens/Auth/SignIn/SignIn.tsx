@@ -4,8 +4,11 @@ import { ISignin } from "../../../interfaces/ISignin";
 import { ErrorHandler } from "../../../config/ErrorHandler";
 import { IErrors } from "../../../interfaces/IErrors";
 import { useValidationInputs } from "../../../hooks/useValidationInputs";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
-type Props = {};
+type Props = {
+  navigation: NavigationProp<ParamListBase>;
+};
 
 const SignIn = (props: Props) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -50,6 +53,7 @@ const SignIn = (props: Props) => {
 
   return (
     <SignInItem
+      navigation={props.navigation}
       handleShowPassword={handleShowPassword}
       showPassword={showPassword}
       signinInputs={signinInputs}

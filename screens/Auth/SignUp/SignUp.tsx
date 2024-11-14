@@ -1,14 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import SignUpItem from "./SignUpItem";
 
 type Props = {};
 
 const SignUp = (props: Props) => {
-  return (
-    <View>
-      <Text>SignUp</Text>
-    </View>
-  );
+  return <SignUpItem />;
 };
 
 export default SignUp;
