@@ -1,7 +1,7 @@
 import { Animated, StyleSheet, useWindowDimensions, View } from "react-native";
 import React from "react";
-import { IOnboarding } from "./interface/IOnboarding";
 import { Colors } from "../../constants/Color";
+import { IOnboarding } from "../../interfaces/IOnboarding";
 
 type Props = {
   datas: IOnboarding[];

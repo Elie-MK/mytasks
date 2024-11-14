@@ -4,9 +4,10 @@ import OnboardingList from "./OnboardingList";
 import { Colors } from "../../constants/Color";
 import Button from "../../component/ui/Button";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type Props = {
-  navigation: NavigationProp<ParamListBase>;
+  navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 const Onboarding = (props: Props) => {
@@ -16,7 +17,7 @@ const Onboarding = (props: Props) => {
       <View style={styles.buttonContainer}>
         <Button
           title="Get Started"
-          onPress={() => props.navigation.navigate("SignIn")}
+          onPress={() => props.navigation.replace("SignIn")}
         />
       </View>
     </SafeAreaView>
