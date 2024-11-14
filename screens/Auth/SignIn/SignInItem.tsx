@@ -14,13 +14,30 @@ import { TouchableWithoutFeedback } from "react-native";
 import { Colors } from "../../../constants/Color";
 import Input from "../../../component/ui/Input";
 import Button from "../../../component/ui/Button";
+import { ISignin } from "../../../interfaces/ISignin";
 
 type Props = {
   showPassword: boolean;
   handleShowPassword: () => void;
+  submit: () => void;
+  handleTextInput: (key: string, value: string) => void;
+  signinInputs: ISignin;
+  errors: {
+    emailErrors: string[];
+    passwordErrors: string[];
+  };
 };
 
-const SignInItem = ({ showPassword, handleShowPassword }: Props) => {
+const SignInItem = ({
+  showPassword,
+  handleShowPassword,
+  submit,
+  handleTextInput,
+  signinInputs,
+  errors,
+}: Props) => {
+  console.log(errors);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "android" ? "padding" : "padding"}
@@ -35,24 +52,52 @@ const SignInItem = ({ showPassword, handleShowPassword }: Props) => {
             </View>
 
             <View>
-              <Input
-                title="Email address"
-                placeholder="Enter your email address"
-              />
-              <Input
-                isPasswordField
-                isShowPassword={!showPassword}
-                handleShowPassword={handleShowPassword}
-                title="Password"
-                placeholder="Enter your password"
-              />
+              <View>
+                <Input
+                  isError={errors.emailErrors.length > 0}
+                  title="Email address"
+                  placeholder="Enter your email address"
+                  value={signinInputs.email}
+                  onChangeText={(value) => handleTextInput("email", value)}
+                />
+
+                <View>
+                  {errors.emailErrors.map((error, index) => (
+                    <Text key={index} style={{ color: Colors.RED }}>
+                      {error}
+                    </Text>
+                  ))}
+                </View>
+              </View>
+
+              {/* Add password input */}
+              <View>
+                <Input
+                  isError={errors.passwordErrors.length > 0}
+                  value={signinInputs.password}
+                  onChangeText={(value) => handleTextInput("password", value)}
+                  isPasswordField
+                  isShowPassword={!showPassword}
+                  handleShowPassword={handleShowPassword}
+                  title="Password"
+                  placeholder="Enter your password"
+                />
+              </View>
+
+              <View>
+                {errors.passwordErrors.map((error, index) => (
+                  <Text key={index} style={{ color: Colors.RED }}>
+                    {error}
+                  </Text>
+                ))}
+              </View>
             </View>
             <View style={styles.forgotPasswdContainer}>
               <TouchableOpacity>
                 <Text style={styles.forgotPasswd}>Forgot password?</Text>
               </TouchableOpacity>
             </View>
-            <Button title="Sign in" />
+            <Button onPress={submit} title="Sign in" />
           </View>
           <View style={styles.registerContainer}>
             <View style={styles.registerTextContainer}>
