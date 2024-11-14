@@ -5,9 +5,10 @@ import { ErrorHandler } from "../../../config/ErrorHandler";
 import { IErrors } from "../../../interfaces/IErrors";
 import { useValidationInputs } from "../../../hooks/useValidationInputs";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type Props = {
-  navigation: NavigationProp<ParamListBase>;
+  navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 const SignIn = (props: Props) => {

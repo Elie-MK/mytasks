@@ -16,6 +16,7 @@ import Input from "../../../component/ui/Input";
 import Button from "../../../component/ui/Button";
 import { ISignin } from "../../../interfaces/ISignin";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type Props = {
   showPassword: boolean;
@@ -27,7 +28,7 @@ type Props = {
     emailErrors: string[];
     passwordErrors: string[];
   };
-  navigation: NavigationProp<ParamListBase>;
+  navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 const SignInItem = ({
@@ -42,7 +43,7 @@ const SignInItem = ({
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "android" ? "padding" : "padding"}
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: Colors.WHITE }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView style={styles.container}>
