@@ -6,6 +6,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import SignIn from "./screens/Auth/SignIn/SignIn";
 import SignUp from "./screens/Auth/SignUp/SignUp";
+import HomeNavigation from "./navigations/HomeNavigation/HomeNavigation";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,11 +33,12 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Onboarding"
+        initialRouteName="Home"
       >
         <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Home" component={HomeNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
