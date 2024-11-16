@@ -33,12 +33,12 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Home"
+        initialRouteName="HomeMain"
       >
         <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Home" component={HomeNavigation} />
+        <Stack.Screen name="HomeMain" component={HomeNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
