@@ -2,6 +2,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../../screens/HomeScreens/Home/Home";
 import { Colors } from "../../constants/Color";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import Calendar from "../../screens/HomeScreens/Calendar/Calendar";
+import Statistics from "../../screens/HomeScreens/Statistics/Statistics";
+import Profile from "../../screens/HomeScreens/Profile/Profile";
+import { handleHaptics } from "../../config/haptics";
 
 export default function HomeNavigation() {
   const Tabs = createBottomTabNavigator();
@@ -45,11 +49,12 @@ export default function HomeNavigation() {
           );
         },
       })}
+      sceneContainerStyle={{ backgroundColor: Colors.WHITE }}
     >
       <Tabs.Screen name="Home" component={Home} />
-      <Tabs.Screen name="Calendar" component={Home} />
-      <Tabs.Screen name="Statistics" component={Home} />
-      <Tabs.Screen name="Profile" component={Home} />
+      <Tabs.Screen name="Calendar" component={Calendar} />
+      <Tabs.Screen name="Statistics" component={Statistics} />
+      <Tabs.Screen name="Profile" component={Profile} />
     </Tabs.Navigator>
   );
 }
