@@ -12,7 +12,11 @@ const SeachInput = (props: Props) => {
       <View style={{ marginLeft: 10 }}>
         <Ionicons name="search" size={24} color={Colors.GRAY} />
       </View>
-      <TextInput placeholder="Search task" style={styles.input} />
+      <TextInput
+        placeholderTextColor={Colors.GRAY}
+        placeholder="Search task"
+        style={styles.input}
+      />
       <TouchableOpacity>
         <Ionicons name="filter-sharp" size={24} color={Colors.BLUE} />
       </TouchableOpacity>
@@ -32,7 +36,6 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 10,
-    // borderWidth: 1,
     width: "80%",
   },
 });
