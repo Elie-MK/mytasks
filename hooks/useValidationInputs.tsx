@@ -15,7 +15,7 @@ export function useValidationInputs({ email, password }: ISignin) {
     } else {
       setIsValid(false);
     }
-  }, []);
+  }, [email, password]);
 
   return { isValid };
 }
