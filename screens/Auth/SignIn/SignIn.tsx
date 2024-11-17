@@ -37,6 +37,7 @@ const SignIn = (props: Props) => {
   const submit = () => {
     if (isValid) {
       console.log("Valid inputs");
+      props.navigation.navigate("HomeMain");
     } else {
       if (!ErrorHandler.validateEmail(signinInputs.email)) {
         setErrorsInput({
