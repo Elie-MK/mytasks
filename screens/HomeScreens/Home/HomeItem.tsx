@@ -1,21 +1,27 @@
 import {
   Dimensions,
+  FlatList,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
+  ViewToken,
 } from "react-native";
 import React from "react";
 import HeaderHome from "./HeaderHome";
 import CategoryList from "../../../component/Category/CategoryList";
 import AddTaskButton from "../../../component/AddTaskButton";
 import TaskCard from "../../../component/TaskCard/TaskCard";
+import { useSharedValue } from "react-native-reanimated";
 
 type Props = {};
 
 const HomeItem = (props: Props) => {
+  const data = new Array(50).fill(0).map((_, index) => ({ id: index }));
   const width = Dimensions.get("window").width;
+
+  const viewableItems = useSharedValue<ViewToken[]>([]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -36,25 +42,18 @@ const HomeItem = (props: Props) => {
         >
           <AddTaskButton />
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-        </ScrollView>
+
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+          onViewableItemsChanged={({ viewableItems: vItems }) => {
+            viewableItems.value = vItems;
+          }}
+          renderItem={({ item }) => (
+            <TaskCard item={item} viewableItems={viewableItems} />
+          )}
+        />
       </View>
     </SafeAreaView>
   );
