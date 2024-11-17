@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import SignIn from "./screens/Auth/SignIn/SignIn";
 import SignUp from "./screens/Auth/SignUp/SignUp";
 import HomeNavigation from "./navigations/HomeNavigation/HomeNavigation";
+import { StatusBar } from "react-native";
+import { Colors } from "./constants/Color";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <StatusBar backgroundColor={Colors.BLACK} />
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
