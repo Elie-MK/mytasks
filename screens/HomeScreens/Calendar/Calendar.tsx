@@ -1,14 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import CalendarItem from "./CalendarItem";
 
 type Props = {};
 
 const Calendar = (props: Props) => {
-  return (
-    <View>
-      <Text>Calendar</Text>
-    </View>
-  );
+  return <CalendarItem />;
 };
 
 export default Calendar;
