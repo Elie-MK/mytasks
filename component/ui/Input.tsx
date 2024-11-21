@@ -11,12 +11,16 @@ type Props = {
   title: string;
   isError?: boolean;
   isPasswordField?: boolean;
+  optionalText?: string;
 } & TextInputProps;
 
 const Input = (props: Props) => {
   return (
     <View>
-      <Text style={styles.title}>{props.title}</Text>
+      <Text style={styles.title}>
+        {props.title}{" "}
+        <Text style={styles.optionalText}>{props.optionalText}</Text>
+      </Text>
       <View
         style={[
           styles.inputContainer,
@@ -33,6 +37,7 @@ const Input = (props: Props) => {
             styles.input,
             { width: props.isPasswordField ? "88%" : "100%" },
           ]}
+          placeholderTextColor={Colors.GRAY}
         />
         {props.isPasswordField && (
           <TouchableOpacity
@@ -70,5 +75,9 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 17,
+  },
+  optionalText: {
+    color: Colors.GRAY,
+    fontFamily: "Roboto-regular",
   },
 });
