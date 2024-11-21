@@ -10,6 +10,7 @@ import HomeNavigation from "./navigations/HomeNavigation/HomeNavigation";
 import { StatusBar } from "react-native";
 import { Colors } from "./constants/Color";
 import CreateTask from "./screens/HomeScreens/Create_Task/CreateTask";
+import Coworkers from "./screens/HomeScreens/Create_Task/ListOfCoworkers/Coworkers";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,13 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="HomeMain" component={HomeNavigation} />
         <Stack.Screen name="CreateTask" component={CreateTask} />
+        <Stack.Screen
+          name="Coworker"
+          component={Coworkers}
+          options={{
+            presentation: "modal",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

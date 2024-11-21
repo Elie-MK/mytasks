@@ -14,8 +14,12 @@ import CategoryList from "../../../component/Category/CategoryList";
 import AddTaskButton from "../../../component/AddTaskButton";
 import TaskCard from "../../../component/TaskCard/TaskCard";
 import { useSharedValue } from "react-native-reanimated";
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-type Props = {};
+type Props = {
+  navigation: NativeStackNavigationProp<ParamListBase>;
+};
 
 const HomeItem = (props: Props) => {
   const data = new Array(50).fill(0).map((_, index) => ({ id: index }));
@@ -40,7 +44,7 @@ const HomeItem = (props: Props) => {
         <View
           style={[styles.addTaskContainer, { top: width < 380 ? 270 : 470 }]}
         >
-          <AddTaskButton />
+          <AddTaskButton navigation={props.navigation} />
         </View>
 
         <FlatList
