@@ -9,6 +9,7 @@ import SignUp from "./screens/Auth/SignUp/SignUp";
 import HomeNavigation from "./navigations/HomeNavigation/HomeNavigation";
 import { StatusBar } from "react-native";
 import { Colors } from "./constants/Color";
+import CreateTask from "./screens/HomeScreens/Create_Task/CreateTask";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ export default function App() {
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="HomeMain" component={HomeNavigation} />
+        <Stack.Screen name="CreateTask" component={CreateTask} />
       </Stack.Navigator>
     </NavigationContainer>
   );
