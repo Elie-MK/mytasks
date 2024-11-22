@@ -1,7 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+
+import { StyleSheet, Text, TouchableOpacity, View , Dimensions } from "react-native";
+
 import { Colors } from "../../constants/Color";
-import { Dimensions } from "react-native";
+
+
 
 type Props = {
   title: string;

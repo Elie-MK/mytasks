@@ -1,18 +1,20 @@
+import { useEffect, useState } from "react";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Onboarding from "./screens/Onboarding/Onboarding";
-import { loadFonts } from "./config/fonts";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
+import { StatusBar } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import { loadFonts } from "./config/fonts";
+import { Colors } from "./constants/Color";
+import HomeNavigation from "./navigations/HomeNavigation/HomeNavigation";
 import SignIn from "./screens/Auth/SignIn/SignIn";
 import SignUp from "./screens/Auth/SignUp/SignUp";
-import HomeNavigation from "./navigations/HomeNavigation/HomeNavigation";
-import { StatusBar } from "react-native";
-import { Colors } from "./constants/Color";
 import CreateTask from "./screens/HomeScreens/Create_Task/CreateTask";
 import Coworkers from "./screens/HomeScreens/Create_Task/ListOfCoworkers/Coworkers";
 import ViewTaskDetail from "./screens/HomeScreens/ViewTaskDetail/ViewTaskDetail";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import Onboarding from "./screens/Onboarding/Onboarding";
 
 const Stack = createNativeStackNavigator();
 

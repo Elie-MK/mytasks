@@ -1,6 +1,7 @@
-import { StyleSheet } from "react-native";
 import React from "react";
+
 import { CheckBox } from "@rneui/themed";
+import { StyleSheet } from "react-native";
 
 type Props = {
   check: boolean;

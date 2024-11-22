@@ -1,11 +1,12 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "../../screens/HomeScreens/Home/Home";
-import { Colors } from "../../constants/Color";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import Calendar from "../../screens/HomeScreens/Calendar/Calendar";
-import Statistics from "../../screens/HomeScreens/Statistics/Statistics";
-import Profile from "../../screens/HomeScreens/Profile/Profile";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import { handleHaptics } from "../../config/haptics";
+import { Colors } from "../../constants/Color";
+import Calendar from "../../screens/HomeScreens/Calendar/Calendar";
+import Home from "../../screens/HomeScreens/Home/Home";
+import Profile from "../../screens/HomeScreens/Profile/Profile";
+import Statistics from "../../screens/HomeScreens/Statistics/Statistics";
 
 export default function HomeNavigation() {
   const Tabs = createBottomTabNavigator();

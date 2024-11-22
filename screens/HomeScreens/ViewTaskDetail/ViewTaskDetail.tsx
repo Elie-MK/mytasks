@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 import ViewTaskDetailUI from "./ViewTaskDetailUI";
 
 type Props = {};

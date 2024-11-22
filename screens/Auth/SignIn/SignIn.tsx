@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import SignInItem from "./SignInItem";
-import { ISignin } from "../../../interfaces/ISignin";
-import { ErrorHandler } from "../../../config/ErrorHandler";
-import { IErrors } from "../../../interfaces/IErrors";
-import { useValidationInputs } from "../../../hooks/useValidationInputs";
+
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+import SignInItem from "./SignInItem";
+import { ErrorHandler } from "../../../config/ErrorHandler";
+import { useValidationInputs } from "../../../hooks/useValidationInputs";
+import { IErrors } from "../../../interfaces/IErrors";
+import { ISignin } from "../../../interfaces/ISignin";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;

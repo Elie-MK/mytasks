@@ -1,8 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Colors } from "../../../constants/Color";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 import SeachInput from "../../../component/ui/SeachInput";
+import { Colors } from "../../../constants/Color";
 
 type Props = {};
 

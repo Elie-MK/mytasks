@@ -1,3 +1,7 @@
+import React from "react";
+
+import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Avatar, LinearProgress } from "@rneui/base";
 import {
   Dimensions,
   StyleSheet,
@@ -6,10 +10,8 @@ import {
   TouchableOpacityProps,
   View,
 } from "react-native";
-import React from "react";
+
 import { Colors } from "../../constants/Color";
-import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Avatar, LinearProgress } from "@rneui/base";
 
 type Props = {
   percentage: number;

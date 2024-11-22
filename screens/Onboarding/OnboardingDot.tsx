@@ -1,5 +1,7 @@
-import { Animated, StyleSheet, useWindowDimensions, View } from "react-native";
 import React from "react";
+
+import { Animated, StyleSheet, useWindowDimensions, View } from "react-native";
+
 import { Colors } from "../../constants/Color";
 import { IOnboarding } from "../../interfaces/IOnboarding";
 

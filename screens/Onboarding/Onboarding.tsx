@@ -1,10 +1,12 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
 import React from "react";
-import OnboardingList from "./OnboardingList";
-import { Colors } from "../../constants/Color";
-import Button from "../../component/ui/Button";
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
+
+import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+
+import OnboardingList from "./OnboardingList";
+import Button from "../../component/ui/Button";
+import { Colors } from "../../constants/Color";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;

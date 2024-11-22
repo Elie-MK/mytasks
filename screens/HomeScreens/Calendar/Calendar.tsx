@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StyleSheet, Text, View } from "react-native";
+
 import CalendarUI from "./CalendarUI";
 
 type Props = {

@@ -1,3 +1,7 @@
+import React from "react";
+
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Dimensions,
   FlatList,
@@ -8,14 +12,13 @@ import {
   View,
   ViewToken,
 } from "react-native";
-import React from "react";
-import HeaderHome from "./HeaderHome";
-import CategoryList from "../../../component/Category/CategoryList";
-import AddTaskButton from "../../../component/AddTaskButton";
-import TaskCard from "../../../component/TaskCard/TaskCard";
 import { useSharedValue } from "react-native-reanimated";
-import { ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+import HeaderHome from "./HeaderHome";
+import AddTaskButton from "../../../component/AddTaskButton";
+import CategoryList from "../../../component/Category/CategoryList";
+import TaskCard from "../../../component/TaskCard/TaskCard";
+
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;

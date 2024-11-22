@@ -1,12 +1,13 @@
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
+
+import { Dimensions, Image, StyleSheet, Text, View , ImageSourcePropType } from "react-native";
 import Animated, {
   BounceIn,
   FadeInDown,
   FadeInUp,
   ZoomIn,
 } from "react-native-reanimated";
-import { ImageSourcePropType } from "react-native";
+
 import { Colors } from "../../constants/Color";
 
 type Props = {

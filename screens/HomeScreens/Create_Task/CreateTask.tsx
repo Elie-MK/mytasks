@@ -1,3 +1,7 @@
+import React, { useEffect } from "react";
+
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -7,14 +11,12 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useEffect } from "react";
-import { ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Colors } from "../../../constants/Color";
-import Input from "../../../component/ui/Input";
-import CustomCheckBox from "../../../component/ui/CheckBox";
+
 import Button from "../../../component/ui/Button";
+import CustomCheckBox from "../../../component/ui/CheckBox";
+import Input from "../../../component/ui/Input";
 import InputDropdown from "../../../component/ui/InputDropdown";
+import { Colors } from "../../../constants/Color";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;

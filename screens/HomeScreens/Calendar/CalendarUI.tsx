@@ -1,3 +1,7 @@
+import React from "react";
+
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Dimensions,
   FlatList,
@@ -7,13 +11,12 @@ import {
   View,
   ViewToken,
 } from "react-native";
-import React from "react";
+import { useSharedValue } from "react-native-reanimated";
+
 import CalendarComp from "./CalendarComp";
 import AddTaskButton from "../../../component/AddTaskButton";
-import { useSharedValue } from "react-native-reanimated";
 import TaskCard from "../../../component/TaskCard/TaskCard";
-import { ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;

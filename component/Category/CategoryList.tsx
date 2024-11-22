@@ -1,5 +1,7 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
+
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+
 import CategoryItem from "./CategoryItem";
 
 type Props = {};

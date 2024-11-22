@@ -1,3 +1,7 @@
+import React from "react";
+
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -10,13 +14,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React from "react";
-import { Colors } from "../../../constants/Color";
-import { ISignin } from "../../../interfaces/ISignin";
-import { ParamListBase } from "@react-navigation/native";
-import Input from "../../../component/ui/Input";
+
 import Button from "../../../component/ui/Button";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import Input from "../../../component/ui/Input";
+import { Colors } from "../../../constants/Color";
 import { ISignup } from "../../../interfaces/ISignup";
 
 type Props = {

@@ -1,3 +1,6 @@
+import React, { useMemo, useRef, useState } from "react";
+
+import moment from "moment";
 import {
   Dimensions,
   StyleSheet,
@@ -5,10 +8,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React, { useMemo, useRef, useState } from "react";
-import { Colors } from "../../../constants/Color";
-import moment from "moment";
 import Swiper from "react-native-swiper";
+
+import { Colors } from "../../../constants/Color";
 
 type Props = {};
 

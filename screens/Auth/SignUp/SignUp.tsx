@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import SignUpItem from "./SignUpItem";
+
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ISignup } from "../../../interfaces/ISignup";
+import { StyleSheet, Text, View } from "react-native";
+
+import SignUpItem from "./SignUpItem";
 import { IErrors } from "../../../interfaces/IErrors";
+import { ISignup } from "../../../interfaces/ISignup";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;

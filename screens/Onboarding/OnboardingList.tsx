@@ -1,8 +1,10 @@
-import { Animated, FlatList, StyleSheet, View, ViewToken } from "react-native";
 import React, { useRef, useState } from "react";
-import OnboardingItem from "./OnboardingItem";
-import OnboardingDot from "./OnboardingDot";
+
+import { Animated, FlatList, StyleSheet, View, ViewToken } from "react-native";
+
 import { OnboardingDatas } from "./OnboardingDatas";
+import OnboardingDot from "./OnboardingDot";
+import OnboardingItem from "./OnboardingItem";
 import { IOnboarding } from "../../interfaces/IOnboarding";
 
 type Props = {};

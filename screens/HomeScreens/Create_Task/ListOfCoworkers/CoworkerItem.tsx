@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+
 import { Avatar } from "@rneui/themed";
+import { StyleSheet, Text, View } from "react-native";
+
 import SelectButton from "../../../../component/ui/SelectButton";
 import { Colors } from "../../../../constants/Color";
 

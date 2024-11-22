@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+
 import { AntDesign } from "@expo/vector-icons";
-import { Colors } from "../../constants/Color";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { TouchableOpacity , StyleSheet, Text, View } from "react-native";
+
+import { Colors } from "../../constants/Color";
 
 type Props = {};
 

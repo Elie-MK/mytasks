@@ -1,13 +1,16 @@
-import { StyleSheet, Text, View, ViewToken } from "react-native";
 import React from "react";
-import TaskCardItem from "./TaskCardItem";
+
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StyleSheet, Text, View, ViewToken } from "react-native";
 import Animated, {
   SharedValue,
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ParamListBase } from "@react-navigation/native";
+
+import TaskCardItem from "./TaskCardItem";
+
 
 type Props = {
   viewableItems: SharedValue<ViewToken[]>;

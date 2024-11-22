@@ -1,9 +1,10 @@
-import { StyleSheet, Text, TextInputProps, View } from "react-native";
 import React from "react";
-import { TextInput } from "react-native";
-import { Colors } from "../../constants/Color";
-import { TouchableOpacity } from "react-native";
+
 import { Entypo } from "@expo/vector-icons";
+import { StyleSheet, Text, TextInputProps, View , TextInput , TouchableOpacity } from "react-native";
+
+
+import { Colors } from "../../constants/Color";
 
 type Props = {
   isShowPassword?: boolean;

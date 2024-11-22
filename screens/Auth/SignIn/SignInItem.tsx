@@ -1,3 +1,7 @@
+import React from "react";
+
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Keyboard,
   Platform,
@@ -7,17 +11,15 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import React from "react";
-import { KeyboardAvoidingView } from "react-native";
-import { TouchableWithoutFeedback } from "react-native";
+ KeyboardAvoidingView , TouchableWithoutFeedback } from "react-native";
 
-import { Colors } from "../../../constants/Color";
-import Input from "../../../component/ui/Input";
+
+
 import Button from "../../../component/ui/Button";
+import Input from "../../../component/ui/Input";
+import { Colors } from "../../../constants/Color";
 import { ISignin } from "../../../interfaces/ISignin";
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 
 type Props = {
   showPassword: boolean;
