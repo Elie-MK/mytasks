@@ -21,7 +21,7 @@ type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
-const HomeItem = (props: Props) => {
+const HomeUI = (props: Props) => {
   const data = new Array(50).fill(0).map((_, index) => ({ id: index }));
   const width = Dimensions.get("window").width;
 
@@ -67,7 +67,7 @@ const HomeItem = (props: Props) => {
   );
 };
 
-export default HomeItem;
+export default HomeUI;
 
 const styles = StyleSheet.create({
   container: {

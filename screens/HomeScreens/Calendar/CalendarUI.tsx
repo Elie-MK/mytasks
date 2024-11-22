@@ -19,7 +19,7 @@ type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
-const CalendarItem = (props: Props) => {
+const CalendarUI = (props: Props) => {
   const data = new Array(50).fill(0).map((_, index) => ({ id: index }));
   const width = Dimensions.get("window").width;
 
@@ -46,7 +46,11 @@ const CalendarItem = (props: Props) => {
             viewableItems.value = vItems;
           }}
           renderItem={({ item }) => (
-            <TaskCard item={item} viewableItems={viewableItems} />
+            <TaskCard
+              navigation={props.navigation}
+              item={item}
+              viewableItems={viewableItems}
+            />
           )}
         />
       </View>
@@ -54,7 +58,7 @@ const CalendarItem = (props: Props) => {
   );
 };
 
-export default CalendarItem;
+export default CalendarUI;
 
 const styles = StyleSheet.create({
   calendarTextContainer: {
