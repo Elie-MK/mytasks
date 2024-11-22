@@ -12,6 +12,7 @@ import { Colors } from "./constants/Color";
 import CreateTask from "./screens/HomeScreens/Create_Task/CreateTask";
 import Coworkers from "./screens/HomeScreens/Create_Task/ListOfCoworkers/Coworkers";
 import ViewTaskDetail from "./screens/HomeScreens/ViewTaskDetail/ViewTaskDetail";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,32 +34,34 @@ export default function App() {
   SplashScreen.hideAsync();
 
   return (
-    <NavigationContainer>
-      <StatusBar backgroundColor={Colors.BLACK} />
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        initialRouteName="HomeMain"
-      >
-        <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="HomeMain" component={HomeNavigation} />
-        <Stack.Screen name="CreateTask" component={CreateTask} />
-        <Stack.Screen
-          name="Coworker"
-          component={Coworkers}
-          options={{
-            presentation: "modal",
+    <SafeAreaProvider>
+      <StatusBar barStyle="dark-content" />
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
           }}
-        />
-        <Stack.Screen
-          options={{}}
-          name="TaskDetail"
-          component={ViewTaskDetail}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          initialRouteName="HomeMain"
+        >
+          <Stack.Screen name="Onboarding" component={Onboarding} />
+          <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="HomeMain" component={HomeNavigation} />
+          <Stack.Screen name="CreateTask" component={CreateTask} />
+          <Stack.Screen
+            name="Coworker"
+            component={Coworkers}
+            options={{
+              presentation: "modal",
+            }}
+          />
+          <Stack.Screen
+            options={{}}
+            name="TaskDetail"
+            component={ViewTaskDetail}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
