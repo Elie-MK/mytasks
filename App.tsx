@@ -11,6 +11,7 @@ import { StatusBar } from "react-native";
 import { Colors } from "./constants/Color";
 import CreateTask from "./screens/HomeScreens/Create_Task/CreateTask";
 import Coworkers from "./screens/HomeScreens/Create_Task/ListOfCoworkers/Coworkers";
+import ViewTaskDetail from "./screens/HomeScreens/ViewTaskDetail/ViewTaskDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,11 @@ export default function App() {
           options={{
             presentation: "modal",
           }}
+        />
+        <Stack.Screen
+          options={{}}
+          name="TaskDetail"
+          component={ViewTaskDetail}
         />
       </Stack.Navigator>
     </NavigationContainer>

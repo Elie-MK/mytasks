@@ -6,9 +6,12 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ParamListBase } from "@react-navigation/native";
 
 type Props = {
   viewableItems: SharedValue<ViewToken[]>;
+  navigation: NativeStackNavigationProp<ParamListBase>;
   item: { id: number };
 };
 
@@ -34,7 +37,10 @@ const TaskCard = React.memo((props: Props) => {
 
   return (
     <Animated.View style={animatedStyle}>
-      <TaskCardItem percentage={0} />
+      <TaskCardItem
+        onPress={() => props.navigation.navigate("TaskDetail")}
+        percentage={0}
+      />
     </Animated.View>
   );
 });

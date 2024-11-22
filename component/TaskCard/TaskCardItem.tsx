@@ -3,21 +3,22 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableOpacityProps,
   View,
 } from "react-native";
 import React from "react";
 import { Colors } from "../../constants/Color";
 import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Avatar, LinearProgress, Slider } from "@rneui/base";
+import { Avatar, LinearProgress } from "@rneui/base";
 
 type Props = {
   percentage: number;
-};
+} & TouchableOpacityProps;
 
 const TaskCardItem = (props: Props) => {
   const width = Dimensions.get("window").width;
   return (
-    <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+    <TouchableOpacity {...props} activeOpacity={0.8} style={styles.container}>
       <View style={styles.contentsContainer}>
         <View style={styles.titleContainer}>
           <Text style={[styles.text, { fontSize: width < 380 ? 14 : 16 }]}>
