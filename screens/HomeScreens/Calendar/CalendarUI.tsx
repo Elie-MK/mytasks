@@ -18,10 +18,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
+const width = Dimensions.get("window").width;
 
 const CalendarUI = (props: Props) => {
   const data = new Array(50).fill(0).map((_, index) => ({ id: index }));
-  const width = Dimensions.get("window").width;
 
   const viewableItems = useSharedValue<ViewToken[]>([]);
   return (
@@ -33,7 +33,7 @@ const CalendarUI = (props: Props) => {
 
       <View style={styles.bodyContainer}>
         <View
-          style={[styles.addTaskContainer, { top: width < 380 ? 270 : 470 }]}
+          style={[styles.addTaskContainer, { top: width < 380 ? 310 : 510 }]}
         >
           <AddTaskButton navigation={props.navigation} />
         </View>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     marginHorizontal: 20,
-    flex: 1,
+    flex: width < 380 ? 0.7 : 1.3,
   },
   addTaskContainer: {
     position: "absolute",

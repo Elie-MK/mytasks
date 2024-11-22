@@ -63,9 +63,9 @@ const CalendarComp = (props: Props) => {
                         style={[
                           styles.days,
                           isActive && {
-                            backgroundColor: "#007BFF",
+                            backgroundColor: Colors.BLUE,
                             borderRadius: 20,
-                            color: "#FFF",
+                            color: Colors.WHITE,
                             fontFamily: "Roboto-bold",
                           },
                         ]}
@@ -82,7 +82,7 @@ const CalendarComp = (props: Props) => {
       </View>
 
       {/* Selected Date */}
-      <View style={{ paddingHorizontal: 20 }}>
+      <View style={{ paddingHorizontal: 20, paddingBottom: 5 }}>
         <Text style={styles.selectedDate}>{value.toDateString()} tasks</Text>
       </View>
     </View>
@@ -94,7 +94,7 @@ export default CalendarComp;
 const styles = StyleSheet.create({
   picker: {
     flex: 1,
-    maxHeight: 100,
+    maxHeight: 300,
     paddingVertical: 12,
     flexDirection: "row",
     alignItems: "center",
@@ -115,11 +115,11 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-bold",
   },
   days: {
-    fontSize: 16,
-    height: 35,
-    width: 35,
-    marginTop: 10,
+    fontSize: width < 380 ? 14 : 16,
+    height: width < 380 ? 45 : 35,
+    width: width < 380 ? 45 : 35,
     textAlign: "center",
+    marginTop: 10,
     lineHeight: 35,
   },
   itemRow: {
