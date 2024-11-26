@@ -1,7 +1,8 @@
+import React from "react";
+
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { handleHaptics } from "../../config/haptics";
 import { Colors } from "../../constants/Color";
 import Calendar from "../../screens/HomeScreens/Calendar/Calendar";
 import Home from "../../screens/HomeScreens/Home/Home";
