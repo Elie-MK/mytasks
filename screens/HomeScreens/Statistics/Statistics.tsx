@@ -2,14 +2,12 @@ import React from "react";
 
 import { StyleSheet, Text, View } from "react-native";
 
+import StatisticsUI from "./StatisticsUI";
+
 type Props = {};
 
 const Statistics = (props: Props) => {
-  return (
-    <View>
-      <Text>Statistics</Text>
-    </View>
-  );
+  return <StatisticsUI />;
 };
 
 export default Statistics;
