@@ -27,7 +27,11 @@ const MenuItem = (props: Props) => {
           <View>{props.rightIcon}</View>
         </View>
       ) : (
-        <TouchableOpacity activeOpacity={0.7} style={styles.container}>
+        <TouchableOpacity
+          {...props}
+          activeOpacity={0.7}
+          style={styles.container}
+        >
           <View style={styles.titleContainer}>
             <View>{props.leftIcon}</View>
             <Text style={styles.title}>{props.title}</Text>
