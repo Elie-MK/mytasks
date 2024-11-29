@@ -28,15 +28,16 @@ const LogoutModal = (props: Props) => {
           onChange={handleSheetChanges}
           backgroundStyle={{
             backgroundColor: Colors.WHITE,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 1 },
+            shadowColor: Colors.BLACK,
+            opacity: 0.1,
+            shadowOffset: { width: 0, height: -4 },
             shadowOpacity: 0.8,
             shadowRadius: 1,
           }}
         >
           <BottomSheetView style={styles.contentContainer}>
             <Text style={styles.text}>
-              Are you sure you would like to log out ?{" "}
+              Are you sure you would like to log out?{" "}
             </Text>
             <View style={styles.contentsContainer}>
               <View
