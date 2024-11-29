@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useRef } from "react";
 
 import {
   Entypo,
@@ -6,82 +6,95 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import BottomSheet, { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Avatar, Switch } from "@rneui/themed";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 
+import LogoutModal from "../../../component/LogoutModal";
 import MenuItem from "../../../component/MenuItem";
 import { Colors } from "../../../constants/Color";
 
 type Props = {};
 
 const ProfileUI = (props: Props) => {
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.textHeader}>Profile</Text>
-      <View style={styles.imageContainer}>
-        <Avatar
-          size={120}
-          rounded
-          source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-        />
-        <Text style={styles.nameText}>John Doe </Text>
-        <Text style={styles.jobTitleText}>UI/UX Designer</Text>
-      </View>
-
-      <View style={styles.menuItemContainer}>
-        {/* Account */}
-        <View>
-          <Text style={styles.title}>Account</Text>
-
-          <View style={styles.accountItemsContainer}>
-            <MenuItem
-              leftIcon={
-                <MaterialCommunityIcons
-                  name="pencil-circle"
-                  size={35}
-                  color="black"
-                />
-              }
-              title="Edit profile"
-            />
-            <MenuItem
-              leftIcon={
-                <MaterialIcons name="dark-mode" size={35} color="black" />
-              }
-              rightIcon={<Switch value={false} />}
-              title="Dark mode"
-              isWitch
-            />
-          </View>
+    <>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.textHeader}>Profile</Text>
+        <View style={styles.imageContainer}>
+          <Avatar
+            size={120}
+            rounded
+            source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
+          />
+          <Text style={styles.nameText}>John Doe </Text>
+          <Text style={styles.jobTitleText}>UI/UX Designer</Text>
         </View>
 
-        {/* General Setting */}
+        <View style={styles.menuItemContainer}>
+          {/* Account */}
+          <View>
+            <Text style={styles.title}>Account</Text>
 
-        <View>
-          <Text style={styles.title}>General Setting</Text>
-          <View style={styles.accountItemsContainer}>
-            <MenuItem
-              leftIcon={
-                <Ionicons name="navigate-circle" size={35} color="black" />
-              }
-              title="Email notification"
-              rightIcon={<Switch value={false} />}
-              isWitch
-            />
-            <MenuItem
-              leftIcon={
-                <Entypo name="help-with-circle" size={35} color="black" />
-              }
-              title="Helps & Supports"
-            />
-            <MenuItem
-              leftIcon={<Entypo name="log-out" size={35} color="black" />}
-              title="Logout"
-            />
+            <View style={styles.accountItemsContainer}>
+              <MenuItem
+                leftIcon={
+                  <MaterialCommunityIcons
+                    name="pencil-circle"
+                    size={35}
+                    color="black"
+                  />
+                }
+                title="Edit profile"
+              />
+              <MenuItem
+                leftIcon={
+                  <MaterialIcons name="dark-mode" size={35} color="black" />
+                }
+                rightIcon={<Switch value={false} />}
+                title="Dark mode"
+                isWitch
+              />
+            </View>
+          </View>
+
+          {/* General Setting */}
+
+          <View>
+            <Text style={styles.title}>General Setting</Text>
+            <View style={styles.accountItemsContainer}>
+              <MenuItem
+                leftIcon={
+                  <Ionicons name="navigate-circle" size={35} color="black" />
+                }
+                title="Email notification"
+                rightIcon={<Switch value={false} />}
+                isWitch
+              />
+              <MenuItem
+                leftIcon={
+                  <Entypo name="help-with-circle" size={35} color="black" />
+                }
+                title="Helps & Supports"
+              />
+              <MenuItem
+                leftIcon={<Entypo name="log-out" size={35} color="black" />}
+                title="Logout"
+                onPress={handlePresentModalPress}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+      <LogoutModal bottomSheetModalRef={bottomSheetModalRef} />
+    </>
   );
 };
 
@@ -114,6 +127,7 @@ const styles = StyleSheet.create({
   },
   menuItemContainer: {
     marginTop: 20,
+    flex: 1,
   },
   title: {
     fontSize: 18,
