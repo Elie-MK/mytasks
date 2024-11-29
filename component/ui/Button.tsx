@@ -11,12 +11,17 @@ import { Colors } from "../../constants/Color";
 
 type Props = {
   title: string;
+  textStyle?: object;
 } & TouchableOpacityProps;
 
 const Button = (props: Props) => {
   return (
-    <TouchableOpacity {...props} activeOpacity={0.7} style={styles.container}>
-      <Text style={styles.text}>{props.title}</Text>
+    <TouchableOpacity
+      {...props}
+      activeOpacity={0.7}
+      style={[styles.container, props.style]}
+    >
+      <Text style={[styles.text, props.textStyle]}>{props.title}</Text>
     </TouchableOpacity>
   );
 };
