@@ -19,6 +19,7 @@ import {
   View,
 } from "react-native";
 
+import AssignedTo from "../../../component/AssignedTo";
 import Input from "../../../component/ui/Input";
 import { Colors } from "../../../constants/Color";
 
@@ -77,36 +78,7 @@ const ViewTaskDetailUI = (props: Props) => {
 
         <View style={styles.assignedContainer}>
           <Text style={styles.taskTitle}>Assigned To</Text>
-          <View style={styles.imagesContainer}>
-            <Avatar
-              size={60}
-              rounded
-              source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-            />
-            <Avatar
-              size={60}
-              rounded
-              source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-            />
-            <Avatar
-              size={60}
-              rounded
-              source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-            />
-            <View style={styles.moreUsers}>
-              <Text style={styles.moreUsersText}>+4</Text>
-            </View>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={[
-                styles.moreUsers,
-                { backgroundColor: Colors.BLUE, marginLeft: -10 },
-              ]}
-              onPress={() => props.navigation.navigate("Coworker")}
-            >
-              <AntDesign name="plus" size={24} color={Colors.WHITE} />
-            </TouchableOpacity>
-          </View>
+          <AssignedTo navigation={props.navigation} />
         </View>
 
         <View style={styles.filesContainer}>
