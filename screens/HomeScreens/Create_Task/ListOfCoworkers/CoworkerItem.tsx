@@ -5,30 +5,36 @@ import { StyleSheet, Text, View } from "react-native";
 
 import SelectButton from "../../../../component/ui/SelectButton";
 import { Colors } from "../../../../constants/Color";
+import { IUser } from "../../../../interfaces/IUser";
 
-type Props = {};
+type Props = {
+  user: IUser;
+  handleSelectCoworker: (coworkerId: number) => void;
+  coworkers: number[];
+};
 
 const CoworkerItem = (props: Props) => {
+  const isCoworkerSelected = props.coworkers.includes(props.user.id);
   return (
     <View
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        marginVertical: 10,
       }}
     >
       <View style={styles.imageContainer}>
-        <Avatar
-          size={70}
-          rounded
-          source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-        />
+        <Avatar size={70} rounded source={{ uri: props.user.image }} />
         <View style={styles.textContainer}>
-          <Text style={styles.nameText}>John Doe</Text>
-          <Text style={styles.jobTitleText}>Designer</Text>
+          <Text style={styles.nameText}>{props.user.name}</Text>
+          <Text style={styles.jobTitleText}>{props.user.jobTitle}</Text>
         </View>
       </View>
-      <SelectButton />
+      <SelectButton
+        isSelected={isCoworkerSelected}
+        onPress={() => props.handleSelectCoworker(props.user.id)}
+      />
     </View>
   );
 };
