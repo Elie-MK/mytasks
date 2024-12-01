@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 
 type Props = {
   check: boolean;
-  hanndleCheck: () => void;
+  handleCheck: () => void;
   title: string;
 };
 
@@ -16,7 +16,7 @@ const CustomCheckBox = (props: Props) => {
       checkedIcon="dot-circle-o"
       uncheckedIcon="circle-o"
       checked={props.check}
-      onPress={props.hanndleCheck}
+      onPress={props.handleCheck}
       containerStyle={styles.checkBoxContainer}
       fontFamily="Roboto-regular"
       textStyle={{ fontSize: 18 }}
