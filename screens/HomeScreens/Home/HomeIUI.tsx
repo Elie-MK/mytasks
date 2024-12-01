@@ -6,7 +6,6 @@ import {
   Dimensions,
   FlatList,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -18,14 +17,14 @@ import HeaderHome from "./HeaderHome";
 import AddTaskButton from "../../../component/AddTaskButton";
 import CategoryList from "../../../component/Category/CategoryList";
 import TaskCard from "../../../component/TaskCard/TaskCard";
-
+import { ITask } from "../../../interfaces/ITask";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
+  tasks: ITask[];
 };
 
 const HomeUI = (props: Props) => {
-  const data = new Array(50).fill(0).map((_, index) => ({ id: index }));
   const width = Dimensions.get("window").width;
 
   const viewableItems = useSharedValue<ViewToken[]>([]);
@@ -51,7 +50,7 @@ const HomeUI = (props: Props) => {
         </View>
 
         <FlatList
-          data={data}
+          data={props.tasks}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           onViewableItemsChanged={({ viewableItems: vItems }) => {
@@ -59,6 +58,7 @@ const HomeUI = (props: Props) => {
           }}
           renderItem={({ item }) => (
             <TaskCard
+              task={item}
               navigation={props.navigation}
               item={item}
               viewableItems={viewableItems}
