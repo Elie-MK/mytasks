@@ -12,19 +12,24 @@ import {
 } from "react-native";
 
 import { Colors } from "../../constants/Color";
+import { ITask } from "../../interfaces/ITask";
 
 type Props = {
   percentage: number;
+  task: ITask;
 } & TouchableOpacityProps;
 
 const TaskCardItem = (props: Props) => {
   const width = Dimensions.get("window").width;
+  console.log(props.task);
+  const sliceUsers = props.task.assignedTo && props.task.assignedTo.slice(0, 3);
+
   return (
     <TouchableOpacity {...props} activeOpacity={0.8} style={styles.container}>
       <View style={styles.contentsContainer}>
         <View style={styles.titleContainer}>
           <Text style={[styles.text, { fontSize: width < 380 ? 14 : 16 }]}>
-            Landing page design{" "}
+            {props.task.title}
           </Text>
           <TouchableOpacity>
             <Entypo name="dots-three-vertical" size={24} color={Colors.GRAY} />
@@ -54,21 +59,14 @@ const TaskCardItem = (props: Props) => {
             />
           </View>
           <View style={styles.imagesContainer}>
-            <Avatar
-              size={32}
-              rounded
-              source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-            />
-            <Avatar
-              size={32}
-              rounded
-              source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-            />
-            <Avatar
-              size={32}
-              rounded
-              source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
-            />
+            {sliceUsers?.map((user) => (
+              <Avatar
+                key={user.id}
+                size={32}
+                rounded
+                source={{ uri: user.image }}
+              />
+            ))}
           </View>
         </View>
 
@@ -84,7 +82,7 @@ const TaskCardItem = (props: Props) => {
             <Text
               style={[styles.commonText, { fontSize: width < 380 ? 12 : 14 }]}
             >
-              09 Sep - 11 Sep
+              {props.task.startDate} - {props.task.endDate}
             </Text>
           </View>
 
