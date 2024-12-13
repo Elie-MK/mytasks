@@ -16,16 +16,15 @@ import { useSharedValue } from "react-native-reanimated";
 import CalendarComp from "./CalendarComp";
 import AddTaskButton from "../../../component/AddTaskButton";
 import TaskCard from "../../../component/TaskCard/TaskCard";
-
+import { ITask } from "../../../interfaces/ITask";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
+  tasks: ITask[];
 };
 const width = Dimensions.get("window").width;
 
 const CalendarUI = (props: Props) => {
-  const data = new Array(50).fill(0).map((_, index) => ({ id: index }));
-
   const viewableItems = useSharedValue<ViewToken[]>([]);
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -42,7 +41,7 @@ const CalendarUI = (props: Props) => {
         </View>
 
         <FlatList
-          data={data}
+          data={props.tasks}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           onViewableItemsChanged={({ viewableItems: vItems }) => {
@@ -50,6 +49,7 @@ const CalendarUI = (props: Props) => {
           }}
           renderItem={({ item }) => (
             <TaskCard
+              task={item}
               navigation={props.navigation}
               item={item}
               viewableItems={viewableItems}
