@@ -2,7 +2,6 @@ import React from "react";
 
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
 import CalendarUI from "./CalendarUI";
@@ -19,5 +18,3 @@ const Calendar = (props: Props) => {
 };
 
 export default Calendar;
-
-const styles = StyleSheet.create({});
