@@ -51,6 +51,7 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
   const handleCreateTask = () => {
     const newTask = { ...task, id: Date.now(), assignedTo: coworkers };
     dispatch(addTask(newTask));
+    navigation.goBack();
   };
 
   return (
