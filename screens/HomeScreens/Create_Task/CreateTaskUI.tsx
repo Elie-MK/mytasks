@@ -2,6 +2,7 @@ import React from "react";
 
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import moment from "moment";
 import {
   Platform,
   SafeAreaView,
@@ -13,6 +14,7 @@ import {
 } from "react-native";
 
 import AssignedTo from "../../../component/AssignedTo";
+import DateTimePicker from "../../../component/DateTimePicker";
 import Button from "../../../component/ui/Button";
 import CustomCheckBox from "../../../component/ui/CheckBox";
 import Input from "../../../component/ui/Input";
@@ -27,9 +29,17 @@ type Props = {
   task: ITask;
   coworkers: IUser[];
   navigation: NativeStackNavigationProp<ParamListBase>;
+  isDatePickerVisible: boolean;
+  handleConfirm: (date: Date) => void;
+  hideDatePicker: () => void;
+  showDatePicker: (nameInput: string) => void;
+  inputDateName: string;
 };
 
 const CreateTaskUI = (props: Props) => {
+  const startDate = moment(props.task.startDate).format("MM/DD/YYYY");
+  const endDate = moment(props.task.endDate).format("MM/DD/YYYY");
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "android" ? "padding" : "height"}
@@ -45,20 +55,28 @@ const CreateTaskUI = (props: Props) => {
               onChangeText={(value) => props.handleValueChange("title", value)}
             />
             <Input
-              value={props.task.startDate}
+              value={props.task.startDate ? startDate : ""}
               placeholder="mm/dd/yyyy"
               title="Start date"
               onChangeText={(value) =>
                 props.handleValueChange("startDate", value)
               }
+              onPress={() => props.showDatePicker("startDate")}
             />
+            <DateTimePicker
+              onConfirm={props.handleConfirm}
+              onCancel={props.hideDatePicker}
+              isVisible={props.isDatePickerVisible}
+            />
+
             <Input
-              value={props.task.endDate}
+              value={props.task.endDate ? endDate : ""}
               placeholder="mm/dd/yyyy"
               title="End date"
               onChangeText={(value) =>
                 props.handleValueChange("endDate", value)
               }
+              onPress={() => props.showDatePicker("endDate")}
             />
 
             <View>

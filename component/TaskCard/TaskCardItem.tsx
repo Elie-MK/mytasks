@@ -2,6 +2,7 @@ import React from "react";
 
 import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Avatar, LinearProgress } from "@rneui/base";
+import moment from "moment";
 import {
   Dimensions,
   StyleSheet,
@@ -23,6 +24,8 @@ const TaskCardItem = (props: Props) => {
   const width = Dimensions.get("window").width;
   console.log(props.task);
   const sliceUsers = props.task.assignedTo && props.task.assignedTo.slice(0, 3);
+  const startDate = moment(props.task.startDate).format("DD MMM");
+  const endDate = moment(props.task.endDate).format("DD MMM");
 
   return (
     <TouchableOpacity {...props} activeOpacity={0.8} style={styles.container}>
@@ -82,7 +85,7 @@ const TaskCardItem = (props: Props) => {
             <Text
               style={[styles.commonText, { fontSize: width < 380 ? 12 : 14 }]}
             >
-              {props.task.startDate} - {props.task.endDate}
+              {startDate} - {endDate}
             </Text>
           </View>
 
