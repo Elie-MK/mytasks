@@ -1,14 +1,18 @@
 import React from "react";
 
-import { StyleSheet, Text, TouchableOpacity, View , Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from "react-native";
 
 import { Colors } from "../../constants/Color";
 
-
-
 type Props = {
   title: string;
-  isSelected: boolean;
+  isSelected?: boolean;
   numberOfTasks: number;
   handleSelect?: () => void;
 };

@@ -39,7 +39,7 @@ const HomeUI = (props: Props) => {
       </View>
 
       <View style={styles.categoryContainer}>
-        <CategoryList />
+        <CategoryList tasks={props.tasks} />
       </View>
 
       <View style={styles.bodyContainer}>

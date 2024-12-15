@@ -1,21 +1,35 @@
 import React from "react";
 
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 import CategoryItem from "./CategoryItem";
+import { TaskCategory } from "../../constants/TaskCategory";
+import { ITask } from "../../interfaces/ITask";
 
-type Props = {};
+type Props = {
+  tasks: ITask[];
+};
 
 const CategoryList = (props: Props) => {
+  const taskCounts = props.tasks.reduce((acc, task) => {
+    acc[task.category] = (acc[task.category] || 0) + 1;
+    return acc;
+  }, {} as Record<TaskCategory, number>);
+
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
       horizontal
       contentContainerStyle={styles.container}
     >
-      <CategoryItem numberOfTasks={5} isSelected={false} title="UI/UX Design" />
-      <CategoryItem numberOfTasks={2} isSelected={false} title="Frontend" />
-      <CategoryItem numberOfTasks={1} isSelected={false} title="Backend" />
+      {Object.values(TaskCategory).map((category) => (
+        <CategoryItem
+          key={category}
+          numberOfTasks={taskCounts[category] ?? 0}
+          isSelected={false}
+          title={category}
+        />
+      ))}
     </ScrollView>
   );
 };
