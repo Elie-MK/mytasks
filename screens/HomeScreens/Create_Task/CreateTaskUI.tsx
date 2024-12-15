@@ -40,6 +40,17 @@ const CreateTaskUI = (props: Props) => {
   const startDate = moment(props.task.startDate).format("MM/DD/YYYY");
   const endDate = moment(props.task.endDate).format("MM/DD/YYYY");
 
+  let startDateFormat: Date = new Date();
+  let endDateFormat: Date = new Date();
+
+  if (props.task.startDate) {
+    startDateFormat = new Date(props.task.startDate);
+  }
+
+  if (props.task.endDate) {
+    endDateFormat = new Date(props.task.endDate);
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "android" ? "padding" : "height"}
@@ -66,6 +77,12 @@ const CreateTaskUI = (props: Props) => {
             <DateTimePicker
               onConfirm={props.handleConfirm}
               onCancel={props.hideDatePicker}
+              maximumDate={
+                props.inputDateName === "startDate" ? endDateFormat : undefined
+              }
+              minimumDate={
+                props.inputDateName === "endDate" ? startDateFormat : undefined
+              }
               isVisible={props.isDatePickerVisible}
             />
 
