@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { ErrorHandler } from "../config/ErrorHandler";
-import { IErrors } from "../interfaces/IErrors";
 import { ISignin } from "../interfaces/ISignin";
 
 export function useValidationInputs({ email, password }: ISignin) {
