@@ -20,6 +20,9 @@ const BarChart = (props: Props) => {
     []
   );
   const font = useFont(regular, 12);
+  if (!font) {
+    return null;
+  }
   return (
     <View
       style={{
