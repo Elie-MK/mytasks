@@ -1,7 +1,8 @@
 import React from "react";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View, ViewToken } from "react-native";
+import { useSharedValue } from "react-native-reanimated";
 
 import CoworkerItem from "./CoworkerItem";
 import { users } from "./dummyUsers";
@@ -25,6 +26,8 @@ const Coworkers: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
+  const viewableItems = useSharedValue<ViewToken[]>([]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Select members</Text>
@@ -32,11 +35,15 @@ const Coworkers: React.FC<Props> = ({ navigation, route }) => {
         data={users}
         keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
+        onViewableItemsChanged={({ viewableItems: vItems }) => {
+          viewableItems.value = vItems;
+        }}
         renderItem={({ item }) => (
           <CoworkerItem
             coworkers={coworkers}
             handleSelectCoworker={handleSelectCoworker}
             user={item}
+            viewableItems={viewableItems}
           />
         )}
       />

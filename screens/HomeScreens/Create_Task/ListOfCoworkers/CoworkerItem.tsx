@@ -1,7 +1,12 @@
 import React from "react";
 
 import { Avatar } from "@rneui/themed";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ViewToken } from "react-native";
+import Animated, {
+  SharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated";
 
 import SelectButton from "../../../../component/ui/SelectButton";
 import { Colors } from "../../../../constants/Color";
@@ -11,31 +16,51 @@ type Props = {
   user: IUser;
   handleSelectCoworker: (coworkerId: number) => void;
   coworkers: number[];
+  viewableItems: SharedValue<ViewToken[]>;
 };
 
 const CoworkerItem = (props: Props) => {
   const isCoworkerSelected = props.coworkers.includes(props.user.id);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    const isVisible = Boolean(
+      props.viewableItems.value
+        .filter((item) => item.isViewable)
+        .find((viewableItem) => viewableItem.item.id === props.user.id)
+    );
+
+    return {
+      opacity: withTiming(isVisible ? 1 : 0),
+      transform: [
+        {
+          scale: withTiming(isVisible ? 1 : 0.5),
+        },
+      ],
+    };
+  });
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginVertical: 10,
-      }}
-    >
-      <View style={styles.imageContainer}>
-        <Avatar size={70} rounded source={{ uri: props.user.image }} />
-        <View style={styles.textContainer}>
-          <Text style={styles.nameText}>{props.user.name}</Text>
-          <Text style={styles.jobTitleText}>{props.user.jobTitle}</Text>
+    <Animated.View style={animatedStyle}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginVertical: 10,
+        }}
+      >
+        <View style={styles.imageContainer}>
+          <Avatar size={70} rounded source={{ uri: props.user.image }} />
+          <View style={styles.textContainer}>
+            <Text style={styles.nameText}>{props.user.name}</Text>
+            <Text style={styles.jobTitleText}>{props.user.jobTitle}</Text>
+          </View>
         </View>
+        <SelectButton
+          isSelected={isCoworkerSelected}
+          onPress={() => props.handleSelectCoworker(props.user.id)}
+        />
       </View>
-      <SelectButton
-        isSelected={isCoworkerSelected}
-        onPress={() => props.handleSelectCoworker(props.user.id)}
-      />
-    </View>
+    </Animated.View>
   );
 };
 
