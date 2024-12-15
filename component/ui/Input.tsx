@@ -1,8 +1,14 @@
 import React from "react";
 
 import { Entypo } from "@expo/vector-icons";
-import { StyleSheet, Text, TextInputProps, View , TextInput , TouchableOpacity } from "react-native";
-
+import {
+  StyleSheet,
+  Text,
+  TextInputProps,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 
 import { Colors } from "../../constants/Color";
 
@@ -12,6 +18,7 @@ type Props = {
   title: string;
   isError?: boolean;
   isPasswordField?: boolean;
+  isRequire?: boolean;
   optionalText?: string;
 } & TextInputProps;
 
@@ -19,7 +26,8 @@ const Input = (props: Props) => {
   return (
     <View>
       <Text style={styles.title}>
-        {props.title}{" "}
+        {props.title}
+        {props.isRequire ? "*" : ""}
         <Text style={styles.optionalText}>{props.optionalText}</Text>
       </Text>
       <View
