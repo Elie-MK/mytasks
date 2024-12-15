@@ -31,7 +31,7 @@ const HomeUI = (props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <HeaderHome />
+        <HeaderHome tasks={props.tasks} />
 
         <View style={styles.todayTaskContainer}>
           <Text style={styles.todayTaskText}>Today tasks</Text>
