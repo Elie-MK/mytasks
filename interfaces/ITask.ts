@@ -1,4 +1,5 @@
 import { IUser } from "./IUser";
+import { TaskCategory } from "../constants/TaskCategory";
 
 export interface ITask {
   id: number;
@@ -6,6 +7,6 @@ export interface ITask {
   startDate: Date | null | string;
   endDate: Date | null | string;
   description?: string;
-  category: string;
+  category: TaskCategory;
   assignedTo?: IUser[];
 }
