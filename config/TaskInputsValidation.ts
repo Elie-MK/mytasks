@@ -1,8 +1,8 @@
 import { TaskCategory } from "../constants/TaskCategory";
 
 let title: string[] = [];
-let startDate: Date | null | string[] = [];
-let endDate: Date | null | string[] = [];
+let startDate: string[] = [];
+let endDate: string[] = [];
 let category: string[] = [];
 
 export const TaskInputsValidation = {
@@ -36,6 +36,14 @@ export const TaskInputsValidation = {
       return false;
     } else if (!(value instanceof Date) || isNaN(value.getFullYear())) {
       endDate.push("End date must be a valid date.");
+    }
+    return true;
+  },
+
+  checkDate: (dateStart: Date, dueDate: Date) => {
+    if (dateStart > dueDate) {
+      endDate.push("End date must be after start date.");
+      return false;
     }
     return true;
   },

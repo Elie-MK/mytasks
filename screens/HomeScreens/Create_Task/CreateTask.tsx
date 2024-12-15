@@ -5,7 +5,11 @@ import { useDispatch } from "react-redux";
 
 import CreateTaskUI from "./CreateTaskUI";
 import { users } from "./ListOfCoworkers/dummyUsers";
+import { TaskInputsValidation } from "../../../config/TaskInputsValidation";
+import { TaskCategory } from "../../../constants/TaskCategory";
+import { useTaskInputsValidation } from "../../../hooks/useTaskInputsValidations";
 import { ITask } from "../../../interfaces/ITask";
+import { ITaskInputsErrors } from "../../../interfaces/ITaskInputsErrors";
 import { addTask } from "../../../store/taskSlice";
 import { RootStackParamList } from "../../../types/RootStackParamList";
 
@@ -19,13 +23,19 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
     title: "",
     startDate: null,
     endDate: null,
-    category: "",
+    category: TaskCategory.PERSONAL,
     assignedTo: [],
     description: "",
   });
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
   const [inputDate, setInputDate] = useState<string>("");
+  const [errorsInput, setErrorsInput] = useState<ITaskInputsErrors>({
+    title: [],
+    startDate: [],
+    endDate: [],
+    category: [],
+  });
 
   const dispatch = useDispatch();
 
@@ -46,6 +56,7 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
     inputName: string;
     value: string;
   }) => {
+    handleResetError(inputName);
     setTask({
       ...task,
       [inputName]: value,
@@ -54,11 +65,22 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
 
   const showDatePicker = (nameInput: string) => {
     setInputDate(nameInput);
+    handleResetError(nameInput);
     setDatePickerVisibility(true);
   };
 
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
+  };
+
+  const handleResetError = (inputName: string) => {
+    if (inputName === "title") setErrorsInput({ ...errorsInput, title: [] });
+    if (inputName === "startDate")
+      setErrorsInput({ ...errorsInput, startDate: [] });
+    if (inputName === "endDate")
+      setErrorsInput({ ...errorsInput, endDate: [] });
+    if (inputName === "category")
+      setErrorsInput({ ...errorsInput, category: [] });
   };
 
   const handleConfirmDate = (date: Date) => {
@@ -76,10 +98,24 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
     hideDatePicker();
   };
 
+  const { formValid } = useTaskInputsValidation(task);
+
   const handleCreateTask = () => {
     const newTask = { ...task, id: Date.now(), assignedTo: coworkers };
-    dispatch(addTask(newTask));
-    navigation.goBack();
+    if (formValid) {
+      dispatch(addTask(newTask));
+      navigation.goBack();
+    } else {
+      setErrorsInput((prevErrors) => {
+        return {
+          ...prevErrors,
+          title: TaskInputsValidation.getErrors().title,
+          startDate: TaskInputsValidation.getErrors().startDate,
+          endDate: TaskInputsValidation.getErrors().endDate,
+          category: TaskInputsValidation.getErrors().category,
+        };
+      });
+    }
   };
 
   return (
@@ -96,6 +132,7 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
       }
       navigation={navigation}
       handleCreateTask={handleCreateTask}
+      errorsInput={errorsInput}
     />
   );
 };

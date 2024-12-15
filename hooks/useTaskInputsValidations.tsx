@@ -11,7 +11,11 @@ export function useTaskInputsValidation(task: ITask) {
       TaskInputsValidation.title(task.title) &&
       TaskInputsValidation.startDate(task.startDate) &&
       TaskInputsValidation.endDate(task.endDate) &&
-      TaskInputsValidation.category(task.category)
+      TaskInputsValidation.category(task.category) &&
+      TaskInputsValidation.checkDate(
+        task.startDate as Date,
+        task.endDate as Date
+      )
     ) {
       setFormValid(true);
     } else {

@@ -20,7 +20,9 @@ import CustomCheckBox from "../../../component/ui/CheckBox";
 import Input from "../../../component/ui/Input";
 import InputDropdown from "../../../component/ui/InputDropdown";
 import { Colors } from "../../../constants/Color";
+import { TaskCategory } from "../../../constants/TaskCategory";
 import { ITask } from "../../../interfaces/ITask";
+import { ITaskInputsErrors } from "../../../interfaces/ITaskInputsErrors";
 import { IUser } from "../../../interfaces/IUser";
 
 type Props = {
@@ -34,22 +36,12 @@ type Props = {
   hideDatePicker: () => void;
   showDatePicker: (nameInput: string) => void;
   inputDateName: string;
+  errorsInput: ITaskInputsErrors;
 };
 
 const CreateTaskUI = (props: Props) => {
   const startDate = moment(props.task.startDate).format("MM/DD/YYYY");
   const endDate = moment(props.task.endDate).format("MM/DD/YYYY");
-
-  let startDateFormat: Date = new Date();
-  let endDateFormat: Date = new Date();
-
-  if (props.task.startDate) {
-    startDateFormat = new Date(props.task.startDate);
-  }
-
-  if (props.task.endDate) {
-    endDateFormat = new Date(props.task.endDate);
-  }
 
   return (
     <KeyboardAvoidingView
@@ -61,12 +53,22 @@ const CreateTaskUI = (props: Props) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <Input
               value={props.task.title}
+              isRequire
               placeholder="Enter task name"
               title="Task name"
               onChangeText={(value) => props.handleValueChange("title", value)}
+              isError={props.errorsInput.title.length > 0}
             />
+            {props.errorsInput.title.length > 0 &&
+              props.errorsInput.title.map((error, index) => (
+                <Text key={index} style={{ color: Colors.RED, marginTop: 5 }}>
+                  {error}
+                </Text>
+              ))}
+
             <Input
               value={props.task.startDate ? startDate : ""}
+              isRequire
               placeholder="mm/dd/yyyy"
               title="Start date"
               onChangeText={(value) =>
@@ -74,20 +76,22 @@ const CreateTaskUI = (props: Props) => {
               }
               onPress={() => props.showDatePicker("startDate")}
             />
+            {props.errorsInput.startDate.length > 0 &&
+              props.errorsInput.startDate.map((error, index) => (
+                <Text key={index} style={{ color: Colors.RED, marginTop: 5 }}>
+                  {error}
+                </Text>
+              ))}
+
             <DateTimePicker
               onConfirm={props.handleConfirm}
               onCancel={props.hideDatePicker}
-              maximumDate={
-                props.inputDateName === "startDate" ? endDateFormat : undefined
-              }
-              minimumDate={
-                props.inputDateName === "endDate" ? startDateFormat : undefined
-              }
               isVisible={props.isDatePickerVisible}
             />
 
             <Input
               value={props.task.endDate ? endDate : ""}
+              isRequire
               placeholder="mm/dd/yyyy"
               title="End date"
               onChangeText={(value) =>
@@ -95,30 +99,50 @@ const CreateTaskUI = (props: Props) => {
               }
               onPress={() => props.showDatePicker("endDate")}
             />
+            {props.errorsInput.endDate.length > 0 &&
+              props.errorsInput.endDate.map((error, index) => (
+                <Text key={index} style={{ color: Colors.RED, marginTop: 5 }}>
+                  {error}
+                </Text>
+              ))}
 
             <View>
-              <Text style={styles.title}>Category</Text>
+              <Text style={styles.title}>Category*</Text>
               <CustomCheckBox
                 title="UI/UX Design"
-                check={props.task.category === "UI/UX Design"}
+                check={props.task.category === TaskCategory.DESIGN}
                 handleCheck={() =>
-                  props.handleValueChange("category", "UI/UX Design")
+                  props.handleValueChange("category", TaskCategory.DESIGN)
                 }
               />
               <CustomCheckBox
                 title="Frontend"
-                check={props.task.category === "Frontend"}
+                check={props.task.category === TaskCategory.FRONTEND}
                 handleCheck={() =>
-                  props.handleValueChange("category", "Frontend")
+                  props.handleValueChange("category", TaskCategory.FRONTEND)
                 }
               />
               <CustomCheckBox
                 title="Backend"
-                check={props.task.category === "Backend"}
+                check={props.task.category === TaskCategory.BACKEND}
                 handleCheck={() =>
-                  props.handleValueChange("category", "Backend")
+                  props.handleValueChange("category", TaskCategory.BACKEND)
                 }
               />
+              <CustomCheckBox
+                title="Personal"
+                check={props.task.category === TaskCategory.PERSONAL}
+                handleCheck={() =>
+                  props.handleValueChange("category", TaskCategory.PERSONAL)
+                }
+              />
+
+              {props.errorsInput.category.length > 0 &&
+                props.errorsInput.category.map((error, index) => (
+                  <Text key={index} style={{ color: Colors.RED, marginTop: 5 }}>
+                    {error}
+                  </Text>
+                ))}
             </View>
             <View>
               <Text style={styles.title}>Assign to</Text>
