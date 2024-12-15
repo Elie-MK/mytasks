@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import SignInItem from "./SignInItem";

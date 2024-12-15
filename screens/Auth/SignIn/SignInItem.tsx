@@ -11,15 +11,14 @@ import {
   Text,
   TouchableOpacity,
   View,
- KeyboardAvoidingView , TouchableWithoutFeedback } from "react-native";
-
-
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from "react-native";
 
 import Button from "../../../component/ui/Button";
 import Input from "../../../component/ui/Input";
 import { Colors } from "../../../constants/Color";
 import { ISignin } from "../../../interfaces/ISignin";
-
 
 type Props = {
   showPassword: boolean;
@@ -116,7 +115,7 @@ const SignInItem = ({
               <View style={styles.registerContainer}>
                 <View style={styles.registerTextContainer}>
                   <Text style={styles.dontHaveAccountText}>
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                   </Text>
                   <TouchableOpacity
                     onPress={() => navigation.navigate("SignUp")}
