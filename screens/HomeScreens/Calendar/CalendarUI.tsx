@@ -35,7 +35,7 @@ const CalendarUI = (props: Props) => {
 
       <View style={styles.bodyContainer}>
         <View
-          style={[styles.addTaskContainer, { top: width < 380 ? 310 : 510 }]}
+          style={[styles.addTaskContainer, { top: width < 380 ? 310 : 470 }]}
         >
           <AddTaskButton navigation={props.navigation} />
         </View>

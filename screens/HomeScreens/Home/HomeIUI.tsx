@@ -44,7 +44,7 @@ const HomeUI = (props: Props) => {
 
       <View style={styles.bodyContainer}>
         <View
-          style={[styles.addTaskContainer, { top: width < 380 ? 270 : 470 }]}
+          style={[styles.addTaskContainer, { top: width < 380 ? 270 : 420 }]}
         >
           <AddTaskButton navigation={props.navigation} />
         </View>
