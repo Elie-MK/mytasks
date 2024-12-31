@@ -105,29 +105,6 @@ const SignUpItem = ({
                   ))}
                 </View>
 
-                <View>
-                  <Input
-                    isError={errors?.passwordErrors.length > 0}
-                    value={signinInputs?.confirmPassword}
-                    onChangeText={(value) =>
-                      handleTextInput("confirmPassword", value)
-                    }
-                    isPasswordField
-                    isShowPassword={!showPassword}
-                    handleShowPassword={handleShowPassword}
-                    title="Confirm Password"
-                    placeholder="Enter your confirm password"
-                  />
-                </View>
-
-                <View>
-                  {errors?.passwordErrors.map((error, index) => (
-                    <Text key={index} style={{ color: Colors.RED }}>
-                      {error}
-                    </Text>
-                  ))}
-                </View>
-
                 <Input
                   isError={errors?.emailErrors.length > 0}
                   title="Job title"
