@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import SignInItem from "./SignInItem";
+import { authServices } from "../../../api/services/auth.service";
+import { JwtToken, Status } from "../../../api/types/models";
 import { ErrorHandler } from "../../../config/ErrorHandler";
 import { useValidationInputs } from "../../../hooks/useValidationInputs";
 import { IErrors } from "../../../interfaces/IErrors";
@@ -36,10 +39,23 @@ const SignIn = (props: Props) => {
     setSigninInputs({ ...signinInputs, [key]: value });
   }
 
-  const submit = () => {
+  const submit = async () => {
     if (isValid) {
-      console.log("Valid inputs");
-      props.navigation.navigate("HomeMain");
+      try {
+        const response = await authServices.login(signinInputs);
+        if (response.status === Status.SUCCESS) {
+          await AsyncStorage.setItem("token", response.data.jwt_token);
+          await AsyncStorage.setItem(
+            "refresh_token",
+            response.data.refresh_token
+          );
+          storeTokens(response.data).then(() => {
+            props.navigation.replace("HomeMain");
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       if (!ErrorHandler.validateEmail(signinInputs.email)) {
         setErrorsInput({
@@ -52,6 +68,18 @@ const SignIn = (props: Props) => {
           passwordErrors: ErrorHandler.getErrors().passwordErrors,
         });
       }
+    }
+  };
+
+  const storeTokens = async (tokens: JwtToken) => {
+    try {
+      await Promise.all([
+        AsyncStorage.setItem("token", tokens.jwt_token.trim()),
+        AsyncStorage.setItem("refresh_token", tokens.refresh_token.trim()),
+      ]);
+    } catch (error) {
+      console.error("Error storing tokens:", error);
+      throw new Error("Failed to store authentication tokens");
     }
   };
 
