@@ -36,7 +36,6 @@ yarn-error.*
 
 #files
 mytask-notifications-firebase-adminsdk-78ksk-2797f2b6ff.json
-google-services.json
 
 /ios
 /android

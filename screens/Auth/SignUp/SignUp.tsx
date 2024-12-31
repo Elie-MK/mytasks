@@ -1,25 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import * as Notifications from "expo-notifications";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 import SignUpItem from "./SignUpItem";
 import { authServices } from "../../../api/services/auth.service";
 import { Status } from "../../../api/types/models";
 import { ErrorHandler } from "../../../config/ErrorHandler";
+import { useNotificatiom } from "../../../context/NotificationContext";
 import { useValidationInputs } from "../../../hooks/useValidationInputs";
 import { IErrors } from "../../../interfaces/IErrors";
 import { ISignup } from "../../../interfaces/ISignup";
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-});
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -39,6 +31,7 @@ const SignUp = (props: Props) => {
     emailErrors: [],
     passwordErrors: [],
   });
+  const { expoPushToken, error, notification } = useNotificatiom();
 
   function handleShowPassword() {
     setShowPassword(!showPassword);
@@ -59,10 +52,14 @@ const SignUp = (props: Props) => {
   async function submit() {
     if (isValid) {
       try {
-        const response = await authServices.register(signupInputs);
+        const response = await authServices.register({
+          ...signupInputs,
+          notificationToken: expoPushToken!,
+        });
         if (response.status === Status.SUCCESS) {
           props.navigation.replace("SignIn");
         }
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -80,6 +77,8 @@ const SignUp = (props: Props) => {
       }
     }
   }
+
+  // console.log(JSON.stringify(notification, null, 2));
 
   return (
     <SignUpItem
