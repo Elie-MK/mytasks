@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from "expo-splash-screen";
@@ -22,6 +23,15 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState<boolean>(false);
+  const [isOnboarded, setIsOnboarded] = useState(false);
+
+  function checkOnboarded() {
+    AsyncStorage.getItem("onboarded").then((value) => {
+      if (value === "true") {
+        setIsOnboarded(true);
+      }
+    });
+  }
 
   useEffect(() => {
     const fetchFonts = async () => {
@@ -29,6 +39,7 @@ export default function App() {
       setFontsLoaded(true);
     };
     fetchFonts();
+    checkOnboarded();
   }, []);
 
   if (!fontsLoaded) {
@@ -46,7 +57,7 @@ export default function App() {
             screenOptions={{
               headerShown: false,
             }}
-            initialRouteName="HomeMain"
+            initialRouteName={isOnboarded ? "SignIn" : "Onboarding"}
           >
             <Stack.Screen name="Onboarding" component={Onboarding} />
             <Stack.Screen name="SignIn" component={SignIn} />
