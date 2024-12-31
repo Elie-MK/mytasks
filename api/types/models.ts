@@ -1,0 +1,36 @@
+export interface UserResponse {
+  id: number;
+  fullName: string;
+  email: string;
+  jobTitle: string;
+  profileUrl: string;
+  notificationToken: string;
+  password?: string;
+  comments: Comment[];
+  tasksIds: number[];
+  role: UserRole[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Comment {
+  id: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export enum UserRole {
+  ADMIN = "ADMIN",
+  USER = "USER",
+}
+
+export enum Status {
+  SUCCESS = "SUCCESS",
+  FAILED = "FAILED",
+}
+
+export interface JwtToken {
+  jwt_token: string;
+  refresh_token: string;
+}
