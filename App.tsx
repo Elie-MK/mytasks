@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Notifications from "expo-notifications";
@@ -11,13 +10,7 @@ import { Provider } from "react-redux";
 
 import { loadFonts } from "./config/fonts";
 import { NotificationProvider } from "./context/NotificationContext";
-import HomeNavigation from "./navigations/HomeNavigation/HomeNavigation";
-import SignIn from "./screens/Auth/SignIn/SignIn";
-import SignUp from "./screens/Auth/SignUp/SignUp";
-import CreateTask from "./screens/HomeScreens/Create_Task/CreateTask";
-import Coworkers from "./screens/HomeScreens/Create_Task/ListOfCoworkers/Coworkers";
-import ViewTaskDetail from "./screens/HomeScreens/ViewTaskDetail/ViewTaskDetail";
-import Onboarding from "./screens/Onboarding/Onboarding";
+import MainAppNavigation from "./navigations/MainAppNavigation";
 import { store } from "./store/store";
 import { RootStackParamList } from "./types/RootStackParamList";
 
@@ -33,15 +26,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState<boolean>(false);
-  const [isOnboarded, setIsOnboarded] = useState(false);
-
-  function checkOnboarded() {
-    AsyncStorage.getItem("onboarded").then((value) => {
-      if (value === "true") {
-        setIsOnboarded(true);
-      }
-    });
-  }
 
   useEffect(() => {
     const fetchFonts = async () => {
@@ -49,7 +33,6 @@ export default function App() {
       setFontsLoaded(true);
     };
     fetchFonts();
-    checkOnboarded();
   }, []);
 
   if (!fontsLoaded) {
@@ -64,28 +47,13 @@ export default function App() {
         <SafeAreaProvider>
           <StatusBar barStyle="dark-content" />
           <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-              }}
-              initialRouteName={isOnboarded ? "SignIn" : "Onboarding"}
-            >
-              <Stack.Screen name="Onboarding" component={Onboarding} />
-              <Stack.Screen name="SignIn" component={SignIn} />
-              <Stack.Screen name="SignUp" component={SignUp} />
-              <Stack.Screen name="HomeMain" component={HomeNavigation} />
-              <Stack.Screen name="CreateTask" component={CreateTask} />
+            <Stack.Navigator>
               <Stack.Screen
-                name="Coworker"
-                component={Coworkers}
                 options={{
-                  presentation: "modal",
+                  headerShown: false,
                 }}
-              />
-              <Stack.Screen
-                options={{}}
-                name="TaskDetail"
-                component={ViewTaskDetail}
+                name="Main"
+                component={MainAppNavigation}
               />
             </Stack.Navigator>
           </NavigationContainer>
