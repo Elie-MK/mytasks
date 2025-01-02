@@ -27,6 +27,7 @@ const SignIn = (props: Props) => {
     emailErrors: [],
     passwordErrors: [],
   });
+
   const { isValid } = useValidationInputs(signinInputs);
 
   function handleShowPassword() {
@@ -34,7 +35,10 @@ const SignIn = (props: Props) => {
   }
 
   function handleTextInput(key: string, value: string) {
-    if (key === "email") setErrorsInput({ ...errorsInput, emailErrors: [] });
+    if (key === "email") {
+      setErrorsInput({ ...errorsInput, emailErrors: [] });
+      value = value.trim().toLowerCase();
+    }
     if (key === "password")
       setErrorsInput({ ...errorsInput, passwordErrors: [] });
     setSigninInputs({ ...signinInputs, [key]: value });

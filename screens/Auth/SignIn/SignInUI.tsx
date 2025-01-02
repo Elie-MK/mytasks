@@ -1,6 +1,6 @@
 import React from "react";
 
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Keyboard,
@@ -67,7 +67,7 @@ const SignInUI = ({
                 <View>
                   <View>
                     <Input
-                      editable={isRefresh}
+                      editable={!isRefresh}
                       isError={errors.emailErrors.length > 0}
                       title="Email address"
                       placeholder="Enter your email address"
@@ -87,7 +87,7 @@ const SignInUI = ({
                   {/* Add password input */}
                   <View>
                     <Input
-                      editable={isRefresh}
+                      editable={!isRefresh}
                       isError={errors.passwordErrors.length > 0}
                       value={signinInputs.password}
                       onChangeText={(value) =>
