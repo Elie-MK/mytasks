@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import SignInItem from "./SignInItem";
+import SignInItem from "./SignInUI";
 import { authServices } from "../../../api/services/auth.service";
 import { JwtToken, Status } from "../../../api/types/models";
 import { ErrorHandler } from "../../../config/ErrorHandler";
@@ -18,6 +18,7 @@ type Props = {
 
 const SignIn = (props: Props) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [signinInputs, setSigninInputs] = useState<ISignin>({
     email: "",
     password: "",
@@ -41,6 +42,7 @@ const SignIn = (props: Props) => {
 
   const submit = async () => {
     if (isValid) {
+      setIsLogin(true);
       try {
         const response = await authServices.login(signinInputs);
         if (response.status === Status.SUCCESS) {
@@ -51,12 +53,15 @@ const SignIn = (props: Props) => {
           );
           storeTokens(response.data).then(() => {
             props.navigation.replace("HomeMain");
+            setIsLogin(false);
           });
         }
       } catch (error) {
         console.log(error);
+        setIsLogin(false);
       }
     } else {
+      setIsLogin(false);
       if (!ErrorHandler.validateEmail(signinInputs.email)) {
         setErrorsInput({
           ...errorsInput,
@@ -92,6 +97,7 @@ const SignIn = (props: Props) => {
       submit={submit}
       errors={errorsInput}
       handleTextInput={handleTextInput}
+      isRefresh={isLogin}
     />
   );
 };
