@@ -100,14 +100,6 @@ const SignInUI = ({
                       placeholder="Enter your password"
                     />
                   </View>
-
-                  <View>
-                    {errors.passwordErrors.map((error, index) => (
-                      <Text key={index} style={{ color: Colors.RED }}>
-                        {error}
-                      </Text>
-                    ))}
-                  </View>
                 </View>
                 <View style={styles.forgotPasswdContainer}>
                   <TouchableOpacity>
