@@ -14,7 +14,7 @@ type Props = {
 const Home = (props: Props) => {
   const tasks = useSelector((state: RootState) => state.task);
 
-  return <HomeUI navigation={props.navigation} tasks={tasks} />;
+  return <HomeUI isFetchingData navigation={props.navigation} tasks={tasks} />;
 };
 
 export default Home;

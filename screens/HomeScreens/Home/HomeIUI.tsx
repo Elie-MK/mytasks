@@ -14,6 +14,7 @@ import {
 import { useSharedValue } from "react-native-reanimated";
 
 import HeaderHome from "./HeaderHome";
+import HomeSkeletonUI from "./HomeSkeletonUI";
 import AddTaskButton from "../../../component/AddTaskButton";
 import CategoryList from "../../../component/Category/CategoryList";
 import TaskCard from "../../../component/TaskCard/TaskCard";
@@ -22,6 +23,7 @@ import { ITask } from "../../../interfaces/ITask";
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
   tasks: ITask[];
+  isFetchingData?: boolean;
 };
 
 const HomeUI = (props: Props) => {
@@ -38,34 +40,43 @@ const HomeUI = (props: Props) => {
         </View>
       </View>
 
-      <View style={styles.categoryContainer}>
-        <CategoryList tasks={props.tasks} />
-      </View>
+      {props.isFetchingData && <HomeSkeletonUI />}
 
-      <View style={styles.bodyContainer}>
-        <View
-          style={[styles.addTaskContainer, { top: width < 380 ? 270 : 420 }]}
-        >
-          <AddTaskButton navigation={props.navigation} />
-        </View>
+      {!props.isFetchingData && (
+        <>
+          <View style={styles.categoryContainer}>
+            <CategoryList tasks={props.tasks} />
+          </View>
 
-        <FlatList
-          data={props.tasks}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          onViewableItemsChanged={({ viewableItems: vItems }) => {
-            viewableItems.value = vItems;
-          }}
-          renderItem={({ item }) => (
-            <TaskCard
-              task={item}
-              navigation={props.navigation}
-              item={item}
-              viewableItems={viewableItems}
+          <View style={styles.bodyContainer}>
+            <View
+              style={[
+                styles.addTaskContainer,
+                { top: width < 380 ? 270 : 420 },
+              ]}
+            >
+              <AddTaskButton navigation={props.navigation} />
+            </View>
+
+            <FlatList
+              data={props.tasks}
+              keyExtractor={(item) => item.id.toString()}
+              showsVerticalScrollIndicator={false}
+              onViewableItemsChanged={({ viewableItems: vItems }) => {
+                viewableItems.value = vItems;
+              }}
+              renderItem={({ item }) => (
+                <TaskCard
+                  task={item}
+                  navigation={props.navigation}
+                  item={item}
+                  viewableItems={viewableItems}
+                />
+              )}
             />
-          )}
-        />
-      </View>
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };
