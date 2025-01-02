@@ -7,14 +7,18 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import BottomSheet, { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Avatar, Switch } from "@rneui/themed";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 import LogoutModal from "../../../component/LogoutModal";
 import MenuItem from "../../../component/MenuItem";
 import { Colors } from "../../../constants/Color";
+import { RootStackParamList } from "../../../types/RootStackParamList";
 
-type Props = {};
+type Props = {
+  navigation: NativeStackNavigationProp<RootStackParamList>;
+};
 
 const ProfileUI = (props: Props) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -93,7 +97,10 @@ const ProfileUI = (props: Props) => {
           </View>
         </View>
       </SafeAreaView>
-      <LogoutModal bottomSheetModalRef={bottomSheetModalRef} />
+      <LogoutModal
+        navigation={props.navigation}
+        bottomSheetModalRef={bottomSheetModalRef}
+      />
     </>
   );
 };
