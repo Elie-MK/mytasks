@@ -38,6 +38,18 @@
         {
           "calendarPermission": "The app needs to access your calendar."
         }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#232323",
+          "image": "./assets/splash.gif",
+          "dark": {
+            "image": "./assets/splash.gif",
+            "backgroundColor": "#000000"
+          },
+          "imageWidth": 200
+        }
       ]
     ],
     "extra": {
