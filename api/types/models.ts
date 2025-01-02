@@ -13,6 +13,11 @@ export interface UserResponse {
   updatedAt: string;
 }
 
+export interface ErrorResponse {
+  message: string;
+  details: string[];
+}
+
 export interface Comment {
   id: number;
   content: string;

@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import axios, { AxiosError, isAxiosError } from "axios";
+import { Alert } from "react-native";
 
 import SignInItem from "./SignInUI";
 import { authServices } from "../../../api/services/auth.service";
-import { JwtToken, Status } from "../../../api/types/models";
+import { JwtToken, Status, ErrorResponse } from "../../../api/types/models";
 import { ErrorHandler } from "../../../config/ErrorHandler";
 import { useValidationInputs } from "../../../hooks/useValidationInputs";
 import { IErrors } from "../../../interfaces/IErrors";
@@ -27,6 +29,7 @@ const SignIn = (props: Props) => {
     emailErrors: [],
     passwordErrors: [],
   });
+  const [error, setError] = useState<ErrorResponse | undefined>(undefined);
 
   const { isValid } = useValidationInputs(signinInputs);
 
@@ -61,7 +64,16 @@ const SignIn = (props: Props) => {
           });
         }
       } catch (error) {
-        console.log(error);
+        if (isAxiosError(error)) {
+          const axiosError = error as AxiosError<ErrorResponse>;
+          if (axiosError.response && axiosError.response.data) {
+            const errorResponse = axiosError.response.data as ErrorResponse;
+            Alert.alert(
+              errorResponse.message,
+              "Please verify your credentials"
+            );
+          }
+        }
         setIsLogin(false);
       }
     } else {
@@ -70,11 +82,6 @@ const SignIn = (props: Props) => {
         setErrorsInput({
           ...errorsInput,
           emailErrors: ErrorHandler.getErrors().emailErrors,
-        });
-      } else if (!ErrorHandler.validatePassword(signinInputs.password)) {
-        setErrorsInput({
-          ...errorsInput,
-          passwordErrors: ErrorHandler.getErrors().passwordErrors,
         });
       }
     }
