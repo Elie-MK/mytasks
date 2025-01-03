@@ -12,18 +12,17 @@ import {
   View,
 } from "react-native";
 
+import { TaskResponse } from "../../api/types/models";
 import { Colors } from "../../constants/Color";
-import { ITask } from "../../interfaces/ITask";
 
 type Props = {
   percentage: number;
-  task: ITask;
+  task: TaskResponse;
 } & TouchableOpacityProps;
 
 const TaskCardItem = (props: Props) => {
   const width = Dimensions.get("window").width;
-  console.log(props.task);
-  const sliceUsers = props.task.assignedTo && props.task.assignedTo.slice(0, 3);
+  const sliceUsers = props.task?.assignedUserIds?.slice(0, 3);
   const startDate = moment(props.task.startDate).format("DD MMM");
   const endDate = moment(props.task.endDate).format("DD MMM");
 
@@ -32,7 +31,7 @@ const TaskCardItem = (props: Props) => {
       <View style={styles.contentsContainer}>
         <View style={styles.titleContainer}>
           <Text style={[styles.text, { fontSize: width < 380 ? 14 : 16 }]}>
-            {props.task.title}
+            {props.task.name}
           </Text>
           <TouchableOpacity>
             <Entypo name="dots-three-vertical" size={24} color={Colors.GRAY} />
@@ -45,30 +44,19 @@ const TaskCardItem = (props: Props) => {
               <Text
                 style={[styles.progress, { fontSize: width < 380 ? 12 : 14 }]}
               >
-                In progress
-              </Text>
-              <Text
-                style={[styles.progress, { fontSize: width < 380 ? 12 : 14 }]}
-              >
-                50%
+                {props.task.isCompleted ? "Completed" : "In progress"}
               </Text>
             </View>
             <LinearProgress
-              color={Colors.BLUE}
-              value={props.percentage}
-              trackColor={Colors.GRAY}
+              color={props.task.isCompleted ? Colors.GREEN : Colors.ORANGE}
+              value={1.0}
               variant="determinate"
               style={styles.linearProgress}
             />
           </View>
           <View style={styles.imagesContainer}>
             {sliceUsers?.map((user) => (
-              <Avatar
-                key={user.id}
-                size={32}
-                rounded
-                source={{ uri: user.image }}
-              />
+              <Avatar key={user} size={32} rounded />
             ))}
           </View>
         </View>
@@ -98,7 +86,7 @@ const TaskCardItem = (props: Props) => {
             <Text
               style={[styles.commonText, { fontSize: width < 380 ? 12 : 14 }]}
             >
-              10 comments
+              {props.task?.comments?.length} comments
             </Text>
           </View>
         </View>
