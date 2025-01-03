@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ITask } from "../interfaces/ITask";
+import { TaskResponse } from "../api/types/models";
 
-const initialState: ITask[] = [];
+const initialState: TaskResponse[] = [];
 
 export const taskSlice = createSlice({
   name: "task",
@@ -14,11 +14,20 @@ export const taskSlice = createSlice({
         state.push(action.payload);
       }
     },
+    addTasks: (state, action) => {
+      const tasks = action.payload;
+      tasks.forEach((task: TaskResponse) => {
+        const existingTask = state.find((existing) => existing.id === task.id);
+        if (!existingTask) {
+          state.push(task);
+        }
+      });
+    },
     removeTask: (state, action) => {
       return state.filter((task) => task.id !== action.payload);
     },
   },
 });
 
-export const { addTask, removeTask } = taskSlice.actions;
+export const { addTask, addTasks, removeTask } = taskSlice.actions;
 export default taskSlice.reducer;
