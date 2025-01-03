@@ -3,12 +3,13 @@ import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import { TaskResponse } from "../../../api/types/models";
 import SeachInput from "../../../component/ui/SeachInput";
 import { Colors } from "../../../constants/Color";
 import { ITask } from "../../../interfaces/ITask";
 
 type Props = {
-  tasks: ITask[];
+  tasks: TaskResponse[];
 };
 
 const HeaderHome = (props: Props) => {

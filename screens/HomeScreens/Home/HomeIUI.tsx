@@ -15,14 +15,15 @@ import { useSharedValue } from "react-native-reanimated";
 
 import HeaderHome from "./HeaderHome";
 import HomeSkeletonUI from "./HomeSkeletonUI";
+import { TaskResponse } from "../../../api/types/models";
 import AddTaskButton from "../../../component/AddTaskButton";
 import CategoryList from "../../../component/Category/CategoryList";
+import EmptyTaskList from "../../../component/EmptyTaskList";
 import TaskCard from "../../../component/TaskCard/TaskCard";
-import { ITask } from "../../../interfaces/ITask";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
-  tasks: ITask[];
+  tasks: TaskResponse[];
   isFetchingData?: boolean;
 };
 
@@ -30,6 +31,7 @@ const HomeUI = (props: Props) => {
   const width = Dimensions.get("window").width;
 
   const viewableItems = useSharedValue<ViewToken[]>([]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -60,7 +62,7 @@ const HomeUI = (props: Props) => {
 
             <FlatList
               data={props.tasks}
-              keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => item?.id?.toString()!}
               showsVerticalScrollIndicator={false}
               onViewableItemsChanged={({ viewableItems: vItems }) => {
                 viewableItems.value = vItems;
@@ -69,10 +71,13 @@ const HomeUI = (props: Props) => {
                 <TaskCard
                   task={item}
                   navigation={props.navigation}
-                  item={item}
+                  item={item.id}
                   viewableItems={viewableItems}
                 />
               )}
+              ListEmptyComponent={() => {
+                return <EmptyTaskList />;
+              }}
             />
           </View>
         </>
