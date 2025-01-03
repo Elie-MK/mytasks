@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 
+import { TaskResponse } from "../api/types/models";
 import { TaskInputsValidation } from "../config/TaskInputsValidation";
-import { ITask } from "../interfaces/ITask";
 
-export function useTaskInputsValidation(task: ITask) {
+export function useTaskInputsValidation(task: TaskResponse) {
   const [formValid, setFormValid] = useState(false);
 
   useEffect(() => {
     if (
-      TaskInputsValidation.title(task.title) &&
+      TaskInputsValidation.title(task.name) &&
       TaskInputsValidation.startDate(task.startDate) &&
       TaskInputsValidation.endDate(task.endDate) &&
       TaskInputsValidation.category(task.category) &&
-      TaskInputsValidation.checkDate(
-        task.startDate as Date,
-        task.endDate as Date
-      )
+      TaskInputsValidation.checkDate(task.startDate, task.endDate)
     ) {
       setFormValid(true);
     } else {
