@@ -10,7 +10,7 @@ export const TaskInputsValidation = {
     title = [];
 
     if (!value) {
-      title.push("Title is required.");
+      title.push("Task name is required.");
       return false;
     } else if (value.length < 5) {
       title.push("The length must be at least 5 characters long.");
@@ -40,8 +40,10 @@ export const TaskInputsValidation = {
     return true;
   },
 
-  checkDate: (dateStart: Date, dueDate: Date) => {
-    if (dateStart > dueDate) {
+  checkDate: (dateStart: string, dueDate: string): boolean => {
+    const startDate = new Date(dateStart);
+    const dueDateParsed = new Date(dueDate);
+    if (startDate > dueDateParsed) {
       endDate.push("End date must be after start date.");
       return false;
     }
