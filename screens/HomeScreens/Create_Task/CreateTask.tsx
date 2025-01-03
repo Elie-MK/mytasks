@@ -5,10 +5,10 @@ import { useDispatch } from "react-redux";
 
 import CreateTaskUI from "./CreateTaskUI";
 import { users } from "./ListOfCoworkers/dummyUsers";
+import { TaskResponse } from "../../../api/types/models";
 import { TaskInputsValidation } from "../../../config/TaskInputsValidation";
 import { TaskCategory } from "../../../constants/TaskCategory";
 import { useTaskInputsValidation } from "../../../hooks/useTaskInputsValidations";
-import { ITask } from "../../../interfaces/ITask";
 import { ITaskInputsErrors } from "../../../interfaces/ITaskInputsErrors";
 import { addTask } from "../../../store/taskSlice";
 import { RootStackParamList } from "../../../types/RootStackParamList";
@@ -18,13 +18,12 @@ type Props = NativeStackScreenProps<RootStackParamList, "CreateTask">;
 const CreateTask: React.FC<Props> = ({ navigation, route }) => {
   const { datas } = route.params ?? { datas: [] };
 
-  const [task, setTask] = React.useState<ITask>({
-    id: 0,
-    title: "",
-    startDate: null,
-    endDate: null,
+  const [task, setTask] = useState<TaskResponse>({
+    name: "",
+    startDate: "",
+    endDate: "",
     category: TaskCategory.PERSONAL,
-    assignedTo: [],
+    assignedUserIds: [],
     description: "",
   });
   const [isDatePickerVisible, setDatePickerVisibility] =
@@ -74,7 +73,7 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleResetError = (inputName: string) => {
-    if (inputName === "title") setErrorsInput({ ...errorsInput, title: [] });
+    if (inputName === "name") setErrorsInput({ ...errorsInput, title: [] });
     if (inputName === "startDate")
       setErrorsInput({ ...errorsInput, startDate: [] });
     if (inputName === "endDate")
@@ -103,8 +102,12 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
   const handleCreateTask = () => {
     const newTask = { ...task, id: Date.now(), assignedTo: coworkers };
     if (formValid) {
-      dispatch(addTask(newTask));
-      navigation.goBack();
+      try {
+        dispatch(addTask(newTask));
+        navigation.goBack();
+      } catch (error) {
+        console.log("Error creating task", error);
+      }
     } else {
       setErrorsInput((prevErrors) => {
         return {

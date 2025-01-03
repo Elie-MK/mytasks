@@ -10,4 +10,11 @@ export const taskServices = {
     );
     return response.data;
   },
+  createTask: async (data: TaskResponse) => {
+    const response = await api.post<ApiResponse<TaskResponse>>(
+      API_ENDPOINTS.TASK.CREATE_TASK,
+      data
+    );
+    return response.data;
+  },
 };

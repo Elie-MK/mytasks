@@ -10,5 +10,6 @@ export const API_ENDPOINTS = {
   TASK: {
     MY_TASKS: (sort: Sort) =>
       `/tasks/my-tasks?page=${sort.page}}&sort=${sort.field},${sort.order}`,
+    CREATE_TASK: "/tasks/create",
   },
 } as const;

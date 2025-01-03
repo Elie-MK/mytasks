@@ -13,6 +13,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
+import { TaskResponse } from "../../../api/types/models";
 import AssignedTo from "../../../component/AssignedTo";
 import DateTimePicker from "../../../component/DateTimePicker";
 import Button from "../../../component/ui/Button";
@@ -21,14 +22,13 @@ import Input from "../../../component/ui/Input";
 import InputDropdown from "../../../component/ui/InputDropdown";
 import { Colors } from "../../../constants/Color";
 import { TaskCategory } from "../../../constants/TaskCategory";
-import { ITask } from "../../../interfaces/ITask";
 import { ITaskInputsErrors } from "../../../interfaces/ITaskInputsErrors";
 import { IUser } from "../../../interfaces/IUser";
 
 type Props = {
   handleCreateTask: () => void;
   handleValueChange: (inputName: string, value: string) => void;
-  task: ITask;
+  task: TaskResponse;
   coworkers: IUser[];
   navigation: NativeStackNavigationProp<ParamListBase>;
   isDatePickerVisible: boolean;
@@ -52,11 +52,11 @@ const CreateTaskUI = (props: Props) => {
         <View style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Input
-              value={props.task.title}
+              value={props.task.name}
               isRequire
               placeholder="Enter task name"
               title="Task name"
-              onChangeText={(value) => props.handleValueChange("title", value)}
+              onChangeText={(value) => props.handleValueChange("name", value)}
               isError={props.errorsInput.title.length > 0}
             />
             {props.errorsInput.title.length > 0 &&
