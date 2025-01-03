@@ -3,11 +3,11 @@ import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
 import CategoryItem from "./CategoryItem";
+import { TaskResponse } from "../../api/types/models";
 import { TaskCategory } from "../../constants/TaskCategory";
-import { ITask } from "../../interfaces/ITask";
 
 type Props = {
-  tasks: ITask[];
+  tasks: TaskResponse[];
 };
 
 const CategoryList = (props: Props) => {
@@ -15,6 +15,13 @@ const CategoryList = (props: Props) => {
     acc[task.category] = (acc[task.category] || 0) + 1;
     return acc;
   }, {} as Record<TaskCategory, number>);
+
+  function capitalizeFirstLetter(category: string) {
+    if (!category) return "";
+    return (
+      category.charAt(0).toUpperCase() + category.slice(1).toLocaleLowerCase()
+    );
+  }
 
   return (
     <ScrollView
@@ -27,7 +34,7 @@ const CategoryList = (props: Props) => {
           key={category}
           numberOfTasks={taskCounts[category] ?? 0}
           isSelected={false}
-          title={category}
+          title={capitalizeFirstLetter(category)}
         />
       ))}
     </ScrollView>
