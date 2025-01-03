@@ -1,3 +1,5 @@
+import { TaskCategory } from "../../constants/TaskCategory";
+
 export interface UserResponse {
   id: number;
   fullName: string;
@@ -11,6 +13,21 @@ export interface UserResponse {
   role: UserRole[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface TaskResponse {
+  id?: number;
+  name: string;
+  description?: string;
+  startDate: string;
+  endDate: string;
+  isCompleted?: boolean;
+  category: TaskCategory;
+  assignedUserIds?: number[];
+  comments?: Comment[];
+  createdBy?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface ErrorResponse {
@@ -38,4 +55,10 @@ export enum Status {
 export interface JwtToken {
   jwt_token: string;
   refresh_token: string;
+}
+
+export interface Sort {
+  field: string;
+  page?: number;
+  order: "asc" | "desc";
 }
