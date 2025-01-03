@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import HomeUI from "./HomeIUI";
+import { taskServices } from "../../../api/services/task.service";
+import { Sort, Status, TaskResponse } from "../../../api/types/models";
 import { RootState } from "../../../store/store";
+import { addTasks } from "../../../store/taskSlice";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -13,8 +16,41 @@ type Props = {
 
 const Home = (props: Props) => {
   const tasks = useSelector((state: RootState) => state.task);
+  const [isFetchingData, setIsFetchingData] = useState(false);
+  const [allTasks, setAllTasks] = useState<TaskResponse[]>([]);
+  const dispatch = useDispatch();
 
-  return <HomeUI isFetchingData navigation={props.navigation} tasks={tasks} />;
+  useEffect(() => {
+    const sort: Sort = {
+      page: 0,
+      field: "createdAt",
+      order: "desc",
+    };
+
+    const fetchTasks = async () => {
+      setIsFetchingData(true);
+      try {
+        const response = await taskServices.myTasks(sort);
+        if (response.status === Status.SUCCESS) {
+          setAllTasks(response.data);
+          dispatch(addTasks(response.data));
+          setIsFetchingData(false);
+        }
+      } catch (error) {
+        setIsFetchingData(false);
+        console.log(error);
+      }
+    };
+    fetchTasks();
+  }, [dispatch]);
+
+  return (
+    <HomeUI
+      isFetchingData={isFetchingData}
+      navigation={props.navigation}
+      tasks={tasks}
+    />
+  );
 };
 
 export default Home;
