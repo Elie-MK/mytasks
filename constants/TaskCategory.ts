@@ -1,6 +1,6 @@
 export enum TaskCategory {
-  PERSONAL = "Personal",
-  FRONTEND = "Frontend",
-  BACKEND = "Backend",
+  PERSONAL = "PERSONAL",
+  FRONTEND = "FRONTEND",
+  BACKEND = "BACKEND",
   DESIGN = "UI/UX Design",
 }
