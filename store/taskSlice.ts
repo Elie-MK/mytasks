@@ -16,12 +16,7 @@ export const taskSlice = createSlice({
     },
     addTasks: (state, action) => {
       const tasks = action.payload;
-      tasks.forEach((task: TaskResponse) => {
-        const existingTask = state.find((existing) => existing.id === task.id);
-        if (!existingTask) {
-          state.push(task);
-        }
-      });
+      state.splice(0, state.length, ...tasks);
     },
     removeTask: (state, action) => {
       return state.filter((task) => task.id !== action.payload);
