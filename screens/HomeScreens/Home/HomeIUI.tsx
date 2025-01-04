@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Dimensions,
   FlatList,
+  RefreshControl,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -24,7 +25,8 @@ import TaskCard from "../../../component/TaskCard/TaskCard";
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
   tasks: TaskResponse[];
-  isFetchingData?: boolean;
+  isFetchingData: boolean;
+  onRefresh: () => void;
 };
 
 const HomeUI = (props: Props) => {
@@ -78,6 +80,13 @@ const HomeUI = (props: Props) => {
               ListEmptyComponent={() => {
                 return <EmptyTaskList />;
               }}
+              refreshControl={
+                <RefreshControl
+                  refreshing={props.isFetchingData}
+                  onRefresh={props.onRefresh}
+                  progressBackgroundColor={"black"}
+                />
+              }
             />
           </View>
         </>
