@@ -5,7 +5,8 @@ import { useDispatch } from "react-redux";
 
 import CreateTaskUI from "./CreateTaskUI";
 import { users } from "./ListOfCoworkers/dummyUsers";
-import { TaskResponse } from "../../../api/types/models";
+import { taskServices } from "../../../api/services/task.service";
+import { Status, TaskResponse } from "../../../api/types/models";
 import { TaskInputsValidation } from "../../../config/TaskInputsValidation";
 import { TaskCategory } from "../../../constants/TaskCategory";
 import { useTaskInputsValidation } from "../../../hooks/useTaskInputsValidations";
@@ -99,12 +100,18 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
 
   const { formValid } = useTaskInputsValidation(task);
 
-  const handleCreateTask = () => {
-    const newTask = { ...task, id: Date.now(), assignedTo: coworkers };
+  const handleCreateTask = async () => {
+    const newTask = {
+      ...task,
+      assignedUserIds: coworkers.map((user) => user.id),
+    };
     if (formValid) {
       try {
-        dispatch(addTask(newTask));
-        navigation.goBack();
+        const response = await taskServices.createTask(newTask);
+        if (response.status === Status.SUCCESS) {
+          dispatch(addTask(response.data));
+          navigation.goBack();
+        }
       } catch (error) {
         console.log("Error creating task", error);
       }
