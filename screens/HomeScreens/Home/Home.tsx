@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,9 +8,10 @@ import { taskServices } from "../../../api/services/task.service";
 import { Sort, Status } from "../../../api/types/models";
 import { RootState } from "../../../store/store";
 import { addTasks } from "../../../store/taskSlice";
+import { RootStackParamList } from "../../../types/RootStackParamList";
 
 type Props = {
-  navigation: NativeStackNavigationProp<ParamListBase>;
+  navigation: NativeStackNavigationProp<RootStackParamList>;
 };
 
 const Home = (props: Props) => {

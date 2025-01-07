@@ -21,9 +21,10 @@ import AddTaskButton from "../../../component/AddTaskButton";
 import CategoryList from "../../../component/Category/CategoryList";
 import EmptyTaskList from "../../../component/EmptyTaskList";
 import TaskCard from "../../../component/TaskCard/TaskCard";
+import { RootStackParamList } from "../../../types/RootStackParamList";
 
 type Props = {
-  navigation: NativeStackNavigationProp<ParamListBase>;
+  navigation: NativeStackNavigationProp<RootStackParamList>;
   tasks: TaskResponse[];
   isFetchingData: boolean;
   onRefresh: () => void;
