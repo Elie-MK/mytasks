@@ -49,6 +49,9 @@ const TaskCardItem = (props: Props) => {
             </View>
             <LinearProgress
               color={props.task.isCompleted ? Colors.GREEN : Colors.ORANGE}
+              trackColor={
+                props.task?.isCompleted ? Colors.GREEN : Colors.ORANGE
+              }
               value={1.0}
               variant="determinate"
               style={styles.linearProgress}
