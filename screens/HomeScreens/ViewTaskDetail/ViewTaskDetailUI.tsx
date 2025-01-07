@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import {
   Entypo,
   Feather,
-  FontAwesome,
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { LinearProgress } from "@rneui/themed";
+import moment from "moment";
 import {
   ScrollView,
   StyleSheet,
@@ -18,15 +18,19 @@ import {
   View,
 } from "react-native";
 
+import { TaskResponse } from "../../../api/types/models";
 import AssignedTo from "../../../component/AssignedTo";
 import Input from "../../../component/ui/Input";
 import { Colors } from "../../../constants/Color";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
+  task: TaskResponse | undefined;
+  loading: boolean;
 };
 
 const ViewTaskDetailUI = (props: Props) => {
+  const date = moment().diff(props.task?.createdAt, "days");
   return (
     <View style={styles.container}>
       <ScrollView
@@ -34,26 +38,27 @@ const ViewTaskDetailUI = (props: Props) => {
         style={styles.subContainer}
       >
         <View style={styles.taskNameContainer}>
-          <Text style={styles.taskTitle}>Task Name</Text>
+          <Text style={styles.taskTitle}>{props.task?.name}</Text>
           <View style={styles.daysContainer}>
             <MaterialCommunityIcons
               name="timer-outline"
               size={24}
               color={Colors.BLUE}
             />
-            <Text style={styles.dayTitle}>4 days</Text>
+            <Text style={styles.dayTitle}>{date} days</Text>
           </View>
         </View>
 
         <View style={styles.progressContainer}>
           <View style={styles.progressTitleContainer}>
-            <Text style={styles.text}>In progress</Text>
-            <Text style={styles.text}>80%</Text>
+            <Text style={styles.text}>
+              {props.task?.isCompleted ? "Completed" : "In progress"}
+            </Text>
           </View>
           <LinearProgress
-            color={Colors.BLUE}
-            // value={}
-            trackColor={Colors.LIGHT_GRAY}
+            value={1}
+            color={props.task?.isCompleted ? Colors.GREEN : Colors.ORANGE}
+            trackColor={props.task?.isCompleted ? Colors.GREEN : Colors.ORANGE}
             variant="determinate"
             style={styles.linearProgress}
           />
@@ -62,7 +67,7 @@ const ViewTaskDetailUI = (props: Props) => {
         <View style={styles.descriptionContainer}>
           <View style={styles.descriptionContainerText}>
             <Text style={styles.taskTitle}>Description</Text>
-            <Text style={styles.categoryText}>UI/UX Design</Text>
+            <Text style={styles.categoryText}>{props.task?.category}</Text>
           </View>
           <View style={styles.descTextContainer}>
             <Text style={styles.descText}>{"\u2B22"}</Text>
@@ -106,17 +111,6 @@ const ViewTaskDetailUI = (props: Props) => {
                 style={{ opacity: 0.6 }}
               />
               <Text style={styles.fileText}>Documentation.pdf</Text>
-            </View>
-            <Feather name="download" size={30} color={Colors.BLUE} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.FileItemContainer}
-          >
-            <View style={styles.fileIconContainer}>
-              <FontAwesome name="folder" size={35} color={Colors.GRAY} />
-              <Text style={styles.fileText}>Icon package</Text>
             </View>
             <Feather name="download" size={30} color={Colors.BLUE} />
           </TouchableOpacity>
