@@ -6,5 +6,5 @@ export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
   HomeMain: undefined;
-  TaskDetail: undefined;
+  TaskDetail: { idTask: number };
 };
