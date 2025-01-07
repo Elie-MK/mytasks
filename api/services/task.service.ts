@@ -17,4 +17,10 @@ export const taskServices = {
     );
     return response.data;
   },
+  getTask: async (id: number) => {
+    const response = await api.get<ApiResponse<TaskResponse>>(
+      API_ENDPOINTS.TASK.GET_TASK(id)
+    );
+    return response.data;
+  },
 };
