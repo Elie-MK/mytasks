@@ -7,7 +7,6 @@ export interface UserResponse {
   jobTitle: string;
   profileUrl: string;
   notificationToken: string;
-  password?: string;
   comments: Comment[];
   tasksIds: number[];
   role: UserRole[];
