@@ -16,7 +16,7 @@ import { useSharedValue } from "react-native-reanimated";
 
 import HeaderHome from "./HeaderHome";
 import HomeSkeletonUI from "./HomeSkeletonUI";
-import { TaskResponse } from "../../../api/types/models";
+import { TaskResponse, UserResponse } from "../../../api/types/models";
 import AddTaskButton from "../../../component/AddTaskButton";
 import CategoryList from "../../../component/Category/CategoryList";
 import EmptyTaskList from "../../../component/EmptyTaskList";
@@ -28,6 +28,7 @@ type Props = {
   tasks: TaskResponse[];
   isFetchingData: boolean;
   onRefresh: () => void;
+  user?: UserResponse;
 };
 
 const HomeUI = (props: Props) => {
@@ -38,7 +39,7 @@ const HomeUI = (props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <HeaderHome tasks={props.tasks} />
+        <HeaderHome user={props.user} tasks={props.tasks} />
 
         <View style={styles.todayTaskContainer}>
           <Text style={styles.todayTaskText}>Today tasks</Text>

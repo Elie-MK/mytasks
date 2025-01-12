@@ -3,13 +3,13 @@ import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { TaskResponse } from "../../../api/types/models";
+import { TaskResponse, UserResponse } from "../../../api/types/models";
 import SeachInput from "../../../component/ui/SeachInput";
 import { Colors } from "../../../constants/Color";
-import { ITask } from "../../../interfaces/ITask";
 
 type Props = {
   tasks: TaskResponse[];
+  user?: UserResponse;
 };
 
 const HeaderHome = (props: Props) => {
@@ -17,9 +17,9 @@ const HeaderHome = (props: Props) => {
     <View>
       <View style={styles.headerContainer}>
         <View>
-          <Text style={styles.nameText}>Hey Elie MK,</Text>
+          <Text style={styles.nameText}>Hey {props.user?.fullName},</Text>
           <Text style={styles.taskText}>
-            You have {props.tasks.length ?? 0} tasks today.
+            You have {props.tasks.length ?? 0} tasks.
           </Text>
         </View>
         <View>

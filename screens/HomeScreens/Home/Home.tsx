@@ -4,8 +4,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useDispatch, useSelector } from "react-redux";
 
 import HomeUI from "./HomeIUI";
+import { authServices } from "../../../api/services/auth.service";
 import { taskServices } from "../../../api/services/task.service";
-import { Sort, Status } from "../../../api/types/models";
+import { Sort, Status, UserResponse } from "../../../api/types/models";
 import { RootState } from "../../../store/store";
 import { addTasks } from "../../../store/taskSlice";
 import { RootStackParamList } from "../../../types/RootStackParamList";
@@ -17,6 +18,9 @@ type Props = {
 const Home = (props: Props) => {
   const tasks = useSelector((state: RootState) => state.task);
   const [isFetchingData, setIsFetchingData] = useState(false);
+  const [currentUser, setCurrentUser] = useState<UserResponse | undefined>(
+    undefined
+  );
   const dispatch = useDispatch();
 
   const fetchTasks = useCallback(async () => {
@@ -43,6 +47,21 @@ const Home = (props: Props) => {
     fetchTasks();
   }, [dispatch, fetchTasks]);
 
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await authServices.currentUser();
+      if (response.status === Status.SUCCESS) {
+        setCurrentUser(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
+
   function onRefresh() {
     fetchTasks();
   }
@@ -53,6 +72,7 @@ const Home = (props: Props) => {
       navigation={props.navigation}
       tasks={tasks}
       onRefresh={onRefresh}
+      user={currentUser}
     />
   );
 };
