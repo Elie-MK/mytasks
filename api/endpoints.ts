@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
     LOGIN: "/auth/login",
     REGISTER: "/auth/register",
     REGISTERASADMIN: "/auth/admin/register",
+    CURRENT_USER: "/auth/current-user",
   },
   TASK: {
     MY_TASKS: (sort: Sort) =>
