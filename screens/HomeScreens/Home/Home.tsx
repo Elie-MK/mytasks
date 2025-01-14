@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SwipeableMethods } from "react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable";
 import { useDispatch, useSelector } from "react-redux";
 
 import HomeUI from "./HomeIUI";
@@ -21,6 +22,11 @@ const Home = (props: Props) => {
   const [currentUser, setCurrentUser] = useState<UserResponse | undefined>(
     undefined
   );
+  const [lastSelectedTask, setLastSelectedTask] = useState<{
+    id: number;
+    ref: SwipeableMethods | null;
+  }>({ id: 0, ref: null });
+
   const dispatch = useDispatch();
 
   const fetchTasks = useCallback(async () => {
@@ -73,6 +79,8 @@ const Home = (props: Props) => {
       tasks={tasks}
       onRefresh={onRefresh}
       user={currentUser}
+      lastSelectedTask={lastSelectedTask}
+      setLastSelectedTask={setLastSelectedTask}
     />
   );
 };

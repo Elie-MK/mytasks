@@ -1,6 +1,5 @@
 import React from "react";
 
-import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Dimensions,
@@ -12,6 +11,7 @@ import {
   View,
   ViewToken,
 } from "react-native";
+import { SwipeableMethods } from "react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable";
 import { useSharedValue } from "react-native-reanimated";
 
 import HeaderHome from "./HeaderHome";
@@ -29,6 +29,11 @@ type Props = {
   isFetchingData: boolean;
   onRefresh: () => void;
   user?: UserResponse;
+  setLastSelectedTask: (item: {
+    id: number;
+    ref: SwipeableMethods | null;
+  }) => void;
+  lastSelectedTask: { id: number; ref: SwipeableMethods | null };
 };
 
 const HomeUI = (props: Props) => {
@@ -77,6 +82,8 @@ const HomeUI = (props: Props) => {
                   navigation={props.navigation}
                   item={item.id}
                   viewableItems={viewableItems}
+                  setLastSelectedTask={props.setLastSelectedTask}
+                  lastSelectedTask={props.lastSelectedTask}
                 />
               )}
               ListEmptyComponent={() => {
@@ -123,8 +130,9 @@ const styles = StyleSheet.create({
   },
   addTaskContainer: {
     position: "absolute",
-    left: 0,
-    right: 0,
     zIndex: 10,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    right: 10,
   },
 });

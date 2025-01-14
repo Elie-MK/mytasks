@@ -1,6 +1,5 @@
 import React from "react";
 
-import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Dimensions,
@@ -11,16 +10,23 @@ import {
   View,
   ViewToken,
 } from "react-native";
+import { SwipeableMethods } from "react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable";
 import { useSharedValue } from "react-native-reanimated";
 
 import CalendarComp from "./CalendarComp";
 import { TaskResponse } from "../../../api/types/models";
 import AddTaskButton from "../../../component/AddTaskButton";
 import TaskCard from "../../../component/TaskCard/TaskCard";
+import { RootStackParamList } from "../../../types/RootStackParamList";
 
 type Props = {
-  navigation: NativeStackNavigationProp<ParamListBase>;
+  navigation: NativeStackNavigationProp<RootStackParamList>;
   tasks: TaskResponse[];
+  setLastSelectedTask: (item: {
+    id: number;
+    ref: SwipeableMethods | null;
+  }) => void;
+  lastSelectedTask: { id: number; ref: SwipeableMethods | null };
 };
 const width = Dimensions.get("window").width;
 
@@ -53,6 +59,8 @@ const CalendarUI = (props: Props) => {
               navigation={props.navigation}
               item={item.id}
               viewableItems={viewableItems}
+              setLastSelectedTask={props.setLastSelectedTask}
+              lastSelectedTask={props.lastSelectedTask}
             />
           )}
         />
@@ -79,8 +87,9 @@ const styles = StyleSheet.create({
   },
   addTaskContainer: {
     position: "absolute",
-    left: 0,
-    right: 0,
     zIndex: 10,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    right: 10,
   },
 });

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Avatar, LinearProgress } from "@rneui/base";
 import moment from "moment";
 import {
@@ -18,6 +18,7 @@ import { Colors } from "../../constants/Color";
 type Props = {
   percentage: number;
   task: TaskResponse;
+  isDropdownVisible?: boolean;
 } & TouchableOpacityProps;
 
 const TaskCardItem = (props: Props) => {
@@ -27,74 +28,73 @@ const TaskCardItem = (props: Props) => {
   const endDate = moment(props.task.endDate).format("DD MMM");
 
   return (
-    <TouchableOpacity {...props} activeOpacity={0.8} style={styles.container}>
-      <View style={styles.contentsContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={[styles.text, { fontSize: width < 380 ? 14 : 16 }]}>
-            {props.task.name}
-          </Text>
-          <TouchableOpacity>
-            <Entypo name="dots-three-vertical" size={24} color={Colors.GRAY} />
-          </TouchableOpacity>
-        </View>
-        {/* Progress */}
-        <View style={styles.progressContainer}>
-          <View>
-            <View style={styles.textInprogressContainer}>
+    <View style={styles.container}>
+      <TouchableOpacity {...props} activeOpacity={0.8}>
+        <View style={styles.contentsContainer}>
+          <View style={styles.titleContainer}>
+            <Text style={[styles.text, { fontSize: width < 380 ? 14 : 16 }]}>
+              {props.task.name}
+            </Text>
+          </View>
+          {/* Progress */}
+          <View style={styles.progressContainer}>
+            <View>
+              <View style={styles.textInprogressContainer}>
+                <Text
+                  style={[styles.progress, { fontSize: width < 380 ? 12 : 14 }]}
+                >
+                  {props.task.isCompleted ? "Completed" : "In progress"}
+                </Text>
+              </View>
+              <LinearProgress
+                color={props.task.isCompleted ? Colors.GREEN : Colors.ORANGE}
+                trackColor={
+                  props.task?.isCompleted ? Colors.GREEN : Colors.ORANGE
+                }
+                value={1.0}
+                variant="determinate"
+                style={styles.linearProgress}
+              />
+            </View>
+            <View style={styles.imagesContainer}>
+              {sliceUsers?.map((user) => (
+                <Avatar key={user} size={32} rounded />
+              ))}
+            </View>
+          </View>
+
+          {/* Bottom */}
+
+          <View style={styles.bottomContainer}>
+            <View style={styles.calendarContainer}>
+              <MaterialIcons
+                name="calendar-month"
+                size={width < 380 ? 18 : 24}
+                color={Colors.BLUE}
+              />
               <Text
-                style={[styles.progress, { fontSize: width < 380 ? 12 : 14 }]}
+                style={[styles.commonText, { fontSize: width < 380 ? 12 : 14 }]}
               >
-                {props.task.isCompleted ? "Completed" : "In progress"}
+                {startDate} - {endDate}
               </Text>
             </View>
-            <LinearProgress
-              color={props.task.isCompleted ? Colors.GREEN : Colors.ORANGE}
-              trackColor={
-                props.task?.isCompleted ? Colors.GREEN : Colors.ORANGE
-              }
-              value={1.0}
-              variant="determinate"
-              style={styles.linearProgress}
-            />
-          </View>
-          <View style={styles.imagesContainer}>
-            {sliceUsers?.map((user) => (
-              <Avatar key={user} size={32} rounded />
-            ))}
+
+            <View style={styles.commentsContainer}>
+              <Ionicons
+                name="chatbubble"
+                size={width < 380 ? 18 : 24}
+                color={Colors.BLUE}
+              />
+              <Text
+                style={[styles.commonText, { fontSize: width < 380 ? 12 : 14 }]}
+              >
+                {props.task?.comments?.length} comments
+              </Text>
+            </View>
           </View>
         </View>
-
-        {/* Bottom */}
-
-        <View style={styles.bottomContainer}>
-          <View style={styles.calendarContainer}>
-            <MaterialIcons
-              name="calendar-month"
-              size={width < 380 ? 18 : 24}
-              color={Colors.BLUE}
-            />
-            <Text
-              style={[styles.commonText, { fontSize: width < 380 ? 12 : 14 }]}
-            >
-              {startDate} - {endDate}
-            </Text>
-          </View>
-
-          <View style={styles.commentsContainer}>
-            <Ionicons
-              name="chatbubble"
-              size={width < 380 ? 18 : 24}
-              color={Colors.BLUE}
-            />
-            <Text
-              style={[styles.commonText, { fontSize: width < 380 ? 12 : 14 }]}
-            >
-              {props.task?.comments?.length} comments
-            </Text>
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -102,9 +102,15 @@ export default TaskCardItem;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
     backgroundColor: Colors.LIGHT_GRAY,
     borderRadius: 5,
+    shadowOpacity: 0.08,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    marginBottom: 20,
+    height: 140,
   },
   contentsContainer: {
     padding: 10,
