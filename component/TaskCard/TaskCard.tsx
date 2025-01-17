@@ -28,6 +28,8 @@ type Props = {
     ref: SwipeableMethods | null;
   }) => void;
   lastSelectedTask: { id: number; ref: SwipeableMethods | null };
+  onDelete: (id: number) => void;
+  onModify: (id: number) => void;
 };
 
 const TaskCard = React.memo((props: Props) => {
@@ -73,12 +75,17 @@ const TaskCard = React.memo((props: Props) => {
             <TouchableOpacity
               activeOpacity={0.7}
               style={[styles.dropDown, styles.edit]}
+              onPress={() => props.onModify(props.task.id!)}
             >
               <Feather name="edit-2" size={25} color={Colors.WHITE} />
             </TouchableOpacity>
           )}
           renderLeftActions={() => (
-            <TouchableOpacity activeOpacity={0.7} style={styles.dropDown}>
+            <TouchableOpacity
+              onPress={() => props.onDelete(props.task.id!)}
+              activeOpacity={0.7}
+              style={styles.dropDown}
+            >
               <Octicons name="trash" size={25} color={Colors.WHITE} />
             </TouchableOpacity>
           )}

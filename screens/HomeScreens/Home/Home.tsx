@@ -9,7 +9,7 @@ import { authServices } from "../../../api/services/auth.service";
 import { taskServices } from "../../../api/services/task.service";
 import { Sort, Status, UserResponse } from "../../../api/types/models";
 import { RootState } from "../../../store/store";
-import { addTasks } from "../../../store/taskSlice";
+import { addTasks, removeTask } from "../../../store/taskSlice";
 import { RootStackParamList } from "../../../types/RootStackParamList";
 
 type Props = {
@@ -72,6 +72,22 @@ const Home = (props: Props) => {
     fetchTasks();
   }
 
+  async function handleOnDelete(id: number) {
+    dispatch(removeTask(id));
+    try {
+      const response = await taskServices.deleteTask(id);
+      if (response.status === Status.SUCCESS) {
+        console.log(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function handleOnEdit(id: number) {
+    console.log("Edit task with id: ", id);
+  }
+
   return (
     <HomeUI
       isFetchingData={isFetchingData}
@@ -81,6 +97,8 @@ const Home = (props: Props) => {
       user={currentUser}
       lastSelectedTask={lastSelectedTask}
       setLastSelectedTask={setLastSelectedTask}
+      onDelete={handleOnDelete}
+      onModify={handleOnEdit}
     />
   );
 };

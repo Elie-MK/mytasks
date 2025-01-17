@@ -34,6 +34,8 @@ type Props = {
     ref: SwipeableMethods | null;
   }) => void;
   lastSelectedTask: { id: number; ref: SwipeableMethods | null };
+  onDelete: (id: number) => void;
+  onModify: (id: number) => void;
 };
 
 const HomeUI = (props: Props) => {
@@ -84,6 +86,8 @@ const HomeUI = (props: Props) => {
                   viewableItems={viewableItems}
                   setLastSelectedTask={props.setLastSelectedTask}
                   lastSelectedTask={props.lastSelectedTask}
+                  onDelete={props.onDelete}
+                  onModify={props.onModify}
                 />
               )}
               ListEmptyComponent={() => {
