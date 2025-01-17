@@ -13,5 +13,6 @@ export const API_ENDPOINTS = {
       `/tasks/my-tasks?page=${sort.page}}&sort=${sort.field},${sort.order}`,
     CREATE_TASK: "/tasks/create",
     GET_TASK: (id: number) => `/tasks/${id}`,
+    DELETE_TASK: (id: number) => `/tasks/${id}`,
   },
 } as const;

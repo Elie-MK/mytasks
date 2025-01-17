@@ -23,4 +23,10 @@ export const taskServices = {
     );
     return response.data;
   },
+  deleteTask: async (id: number) => {
+    const response = await api.delete<ApiResponse<string>>(
+      API_ENDPOINTS.TASK.DELETE_TASK(id)
+    );
+    return response.data;
+  },
 };
