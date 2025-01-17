@@ -16,6 +16,7 @@ import { useSharedValue } from "react-native-reanimated";
 import CalendarComp from "./CalendarComp";
 import { TaskResponse } from "../../../api/types/models";
 import AddTaskButton from "../../../component/AddTaskButton";
+import EmptyTaskList from "../../../component/EmptyTaskList";
 import TaskCard from "../../../component/TaskCard/TaskCard";
 import { RootStackParamList } from "../../../types/RootStackParamList";
 
@@ -27,6 +28,8 @@ type Props = {
     ref: SwipeableMethods | null;
   }) => void;
   lastSelectedTask: { id: number; ref: SwipeableMethods | null };
+  onDelete: (id: number) => void;
+  onModify: (id: number) => void;
 };
 const width = Dimensions.get("window").width;
 
@@ -53,6 +56,9 @@ const CalendarUI = (props: Props) => {
           onViewableItemsChanged={({ viewableItems: vItems }) => {
             viewableItems.value = vItems;
           }}
+          ListEmptyComponent={() => {
+            return <EmptyTaskList />;
+          }}
           renderItem={({ item }) => (
             <TaskCard
               task={item}
@@ -61,6 +67,8 @@ const CalendarUI = (props: Props) => {
               viewableItems={viewableItems}
               setLastSelectedTask={props.setLastSelectedTask}
               lastSelectedTask={props.lastSelectedTask}
+              onDelete={props.onDelete}
+              onModify={props.onModify}
             />
           )}
         />
