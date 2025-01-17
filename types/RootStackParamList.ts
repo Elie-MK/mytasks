@@ -1,6 +1,6 @@
 export type RootStackParamList = {
   Main: undefined;
-  CreateTask: { datas: number[] };
+  CreateTask: { datas?: number[]; idTask?: number };
   Coworker: { datas: number[] };
   Onboarding: undefined;
   SignIn: undefined;
