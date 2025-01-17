@@ -14,5 +14,6 @@ export const API_ENDPOINTS = {
     CREATE_TASK: "/tasks/create",
     GET_TASK: (id: number) => `/tasks/${id}`,
     DELETE_TASK: (id: number) => `/tasks/${id}`,
+    UPDATE_TASK: (id: number) => `/tasks/my-task/${id}`,
   },
 } as const;

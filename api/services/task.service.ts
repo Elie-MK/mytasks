@@ -23,6 +23,13 @@ export const taskServices = {
     );
     return response.data;
   },
+  updateTask: async (id: number, data: TaskResponse) => {
+    const response = await api.put<ApiResponse<TaskResponse>>(
+      API_ENDPOINTS.TASK.UPDATE_TASK(id),
+      data
+    );
+    return response.data;
+  },
   deleteTask: async (id: number) => {
     const response = await api.delete<ApiResponse<string>>(
       API_ENDPOINTS.TASK.DELETE_TASK(id)
