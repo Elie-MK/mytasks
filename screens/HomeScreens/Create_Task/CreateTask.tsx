@@ -11,13 +11,13 @@ import { TaskInputsValidation } from "../../../config/TaskInputsValidation";
 import { TaskCategory } from "../../../constants/TaskCategory";
 import { useTaskInputsValidation } from "../../../hooks/useTaskInputsValidations";
 import { ITaskInputsErrors } from "../../../interfaces/ITaskInputsErrors";
-import { addTask } from "../../../store/taskSlice";
+import { addTask, updateTask } from "../../../store/taskSlice";
 import { RootStackParamList } from "../../../types/RootStackParamList";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CreateTask">;
 
 const CreateTask: React.FC<Props> = ({ navigation, route }) => {
-  const { datas } = route.params ?? { datas: [] };
+  const { datas, idTask } = route.params ?? { datas: [], idTask: undefined };
 
   const [task, setTask] = useState<TaskResponse>({
     name: "",
@@ -39,7 +39,7 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
 
-  const coworkers = users.filter((user) => datas.includes(user.id));
+  const coworkers = users.filter((user) => datas?.includes(user.id));
 
   useEffect(() => {
     navigation.setOptions({
@@ -98,6 +98,36 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
     hideDatePicker();
   };
 
+  useEffect(() => {
+    const handleGetTask = async () => {
+      try {
+        const response = await taskServices.getTask(idTask!);
+        if (response.status === Status.SUCCESS) {
+          setTask(response.data);
+        }
+      } catch (error) {
+        console.log("Error getting task", error);
+      }
+    };
+
+    if (idTask) {
+      handleGetTask();
+    }
+  }, [idTask]);
+
+  const handleModifyTask = async () => {
+    try {
+      const response = await taskServices.updateTask(idTask!, task);
+      if (response.status === Status.SUCCESS) {
+        dispatch(updateTask(response.data));
+        console.log(response.data);
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.log("Error modifying task", error);
+    }
+  };
+
   const { formValid } = useTaskInputsValidation(task);
 
   const handleCreateTask = async () => {
@@ -142,6 +172,8 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
       }
       navigation={navigation}
       handleCreateTask={handleCreateTask}
+      handleModifyTask={handleModifyTask}
+      taskId={idTask}
       errorsInput={errorsInput}
     />
   );

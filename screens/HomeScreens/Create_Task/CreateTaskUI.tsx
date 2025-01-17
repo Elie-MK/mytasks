@@ -37,6 +37,8 @@ type Props = {
   showDatePicker: (nameInput: string) => void;
   inputDateName: string;
   errorsInput: ITaskInputsErrors;
+  handleModifyTask: () => void;
+  taskId?: number;
 };
 
 const CreateTaskUI = (props: Props) => {
@@ -168,7 +170,11 @@ const CreateTaskUI = (props: Props) => {
               />
             </View>
             <View style={{ marginTop: 20 }}>
-              <Button onPress={props.handleCreateTask} title="Create Task" />
+              {props.taskId ? (
+                <Button onPress={props.handleModifyTask} title="Modify Task" />
+              ) : (
+                <Button onPress={props.handleCreateTask} title="Create Task" />
+              )}
             </View>
           </ScrollView>
         </View>

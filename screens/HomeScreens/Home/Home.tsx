@@ -85,7 +85,7 @@ const Home = (props: Props) => {
   }
 
   function handleOnEdit(id: number) {
-    console.log("Edit task with id: ", id);
+    props.navigation.navigate("CreateTask", { idTask: id });
   }
 
   return (
