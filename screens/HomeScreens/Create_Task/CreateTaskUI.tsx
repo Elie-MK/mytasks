@@ -39,6 +39,7 @@ type Props = {
   errorsInput: ITaskInputsErrors;
   handleModifyTask: () => void;
   taskId?: number;
+  isCreatingTask: boolean;
 };
 
 const CreateTaskUI = (props: Props) => {
@@ -171,9 +172,17 @@ const CreateTaskUI = (props: Props) => {
             </View>
             <View style={{ marginTop: 20 }}>
               {props.taskId ? (
-                <Button onPress={props.handleModifyTask} title="Modify Task" />
+                <Button
+                  isRefresh={props.isCreatingTask}
+                  onPress={props.handleModifyTask}
+                  title="Modify Task"
+                />
               ) : (
-                <Button onPress={props.handleCreateTask} title="Create Task" />
+                <Button
+                  isRefresh={props.isCreatingTask}
+                  onPress={props.handleCreateTask}
+                  title="Create Task"
+                />
               )}
             </View>
           </ScrollView>

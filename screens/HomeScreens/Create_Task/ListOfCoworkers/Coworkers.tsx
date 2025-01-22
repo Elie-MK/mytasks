@@ -26,6 +26,8 @@ const Coworkers: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
+  const handleGetCoworkers = () => {};
+
   const viewableItems = useSharedValue<ViewToken[]>([]);
 
   return (

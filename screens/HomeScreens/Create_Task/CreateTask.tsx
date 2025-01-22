@@ -36,6 +36,7 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
     endDate: [],
     category: [],
   });
+  const [isCreatingTask, setIsCreatingTask] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -136,14 +137,17 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
       assignedUserIds: coworkers.map((user) => user.id),
     };
     if (formValid) {
+      setIsCreatingTask(true);
       try {
         const response = await taskServices.createTask(newTask);
         if (response.status === Status.SUCCESS) {
           dispatch(addTask(response.data));
           navigation.goBack();
+          setIsCreatingTask(false);
         }
       } catch (error) {
         console.log("Error creating task", error);
+        setIsCreatingTask(false);
       }
     } else {
       setErrorsInput((prevErrors) => {
@@ -175,6 +179,7 @@ const CreateTask: React.FC<Props> = ({ navigation, route }) => {
       handleModifyTask={handleModifyTask}
       taskId={idTask}
       errorsInput={errorsInput}
+      isCreatingTask={isCreatingTask}
     />
   );
 };
