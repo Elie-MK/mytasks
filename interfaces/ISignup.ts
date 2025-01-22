@@ -5,4 +5,6 @@ export interface ISignup {
   jobTitle: string;
   notificationToken: string;
   profileUrl: string;
+  organizationName: string;
+  organizationEmail: string;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { MaterialIcons } from "@expo/vector-icons";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
@@ -19,6 +20,7 @@ import Button from "../../../component/ui/Button";
 import Input from "../../../component/ui/Input";
 import { Colors } from "../../../constants/Color";
 import { ISignup } from "../../../interfaces/ISignup";
+import { ISignupErrors } from "../../../interfaces/ISignupErrors";
 
 type Props = {
   showPassword: boolean;
@@ -26,11 +28,9 @@ type Props = {
   submit: () => void;
   handleTextInput: (key: string, value: string) => void;
   signinInputs: ISignup;
-  errors: {
-    emailErrors: string[];
-    passwordErrors: string[];
-  };
+  errors: ISignupErrors;
   navigation: NativeStackNavigationProp<ParamListBase>;
+  isRegistering: boolean;
 };
 
 const SignUpItem = ({
@@ -41,6 +41,7 @@ const SignUpItem = ({
   signinInputs,
   errors,
   navigation,
+  isRegistering,
 }: Props) => {
   return (
     <KeyboardAvoidingView
@@ -49,11 +50,23 @@ const SignUpItem = ({
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView style={styles.container}>
+          <View style={{ flexDirection: "row", marginBottom: 10 }}>
+            <TouchableOpacity
+              style={styles.backArrow}
+              onPress={() => navigation.goBack()}
+            >
+              <MaterialIcons
+                name="arrow-back-ios-new"
+                size={20}
+                color="black"
+              />
+            </TouchableOpacity>
+          </View>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
               <View style={styles.titleContainer}>
-                <Text style={styles.title}>Sign In</Text>
-                <Text style={styles.desc}>Sign in to continue using app.</Text>
+                <Text style={styles.title}>Sign Up</Text>
+                <Text style={styles.desc}> Create your account</Text>
               </View>
 
               <View>
@@ -65,23 +78,26 @@ const SignUpItem = ({
                     value={signinInputs?.email}
                     onChangeText={(value) => handleTextInput("email", value)}
                   />
-
-                  <View>
-                    {errors?.emailErrors.map((error, index) => (
-                      <Text key={index} style={{ color: Colors.RED }}>
-                        {error}
-                      </Text>
-                    ))}
-                  </View>
+                  {errors?.emailErrors.map((error, index) => (
+                    <View key={index} style={styles.errorContainer}>
+                      <Text style={{ color: Colors.RED }}>{error}</Text>
+                    </View>
+                  ))}
                 </View>
 
                 <Input
-                  isError={errors?.emailErrors.length > 0}
+                  isError={errors?.fullNameErrors.length > 0}
                   title="Full Name"
                   placeholder="Enter your full name"
                   value={signinInputs?.fullName}
                   onChangeText={(value) => handleTextInput("fullName", value)}
                 />
+
+                {errors?.fullNameErrors.map((error, index) => (
+                  <View key={index} style={styles.errorContainer}>
+                    <Text style={{ color: Colors.RED }}>{error}</Text>
+                  </View>
+                ))}
 
                 {/* Add password input */}
                 <View>
@@ -97,24 +113,60 @@ const SignUpItem = ({
                   />
                 </View>
 
-                <View>
-                  {errors?.passwordErrors.map((error, index) => (
-                    <Text key={index} style={{ color: Colors.RED }}>
-                      {error}
-                    </Text>
-                  ))}
-                </View>
+                {errors?.passwordErrors.map((error, index) => (
+                  <View key={index} style={styles.errorContainer}>
+                    <Text style={{ color: Colors.RED }}>{error}</Text>
+                  </View>
+                ))}
 
                 <Input
-                  isError={errors?.emailErrors.length > 0}
+                  isError={errors?.jobTitleErrors.length > 0}
                   title="Job title"
                   placeholder="Enter your Job title"
                   value={signinInputs?.jobTitle}
                   onChangeText={(value) => handleTextInput("jobTitle", value)}
                 />
+                {errors?.jobTitleErrors.map((error, index) => (
+                  <View key={index} style={styles.errorContainer}>
+                    <Text style={{ color: Colors.RED }}>{error}</Text>
+                  </View>
+                ))}
+
+                <Input
+                  isError={errors?.organizationNameErrors.length > 0}
+                  title="Organization Name"
+                  placeholder="Enter your organization name"
+                  value={signinInputs?.organizationName}
+                  onChangeText={(value) =>
+                    handleTextInput("organizationName", value)
+                  }
+                />
+                {errors?.organizationNameErrors.map((error, index) => (
+                  <View key={index} style={styles.errorContainer}>
+                    <Text style={{ color: Colors.RED }}>{error}</Text>
+                  </View>
+                ))}
+                <Input
+                  isError={errors?.organizationEmailErrors.length > 0}
+                  title="Organization email"
+                  placeholder="Enter your organization email"
+                  value={signinInputs?.organizationEmail}
+                  onChangeText={(value) =>
+                    handleTextInput("organizationEmail", value)
+                  }
+                />
+                {errors?.organizationEmailErrors.map((error, index) => (
+                  <View key={index} style={styles.errorContainer}>
+                    <Text style={{ color: Colors.RED }}>{error}</Text>
+                  </View>
+                ))}
               </View>
 
-              <Button onPress={submit} title="Register" />
+              <Button
+                isRefresh={isRegistering}
+                onPress={submit}
+                title="Register"
+              />
             </View>
             <View style={styles.registerContainer}>
               <View style={styles.registerTextContainer}>
@@ -173,5 +225,16 @@ const styles = StyleSheet.create({
   dontHaveAccountText: {
     color: Colors.GRAY,
     fontFamily: "Roboto-Regular",
+  },
+  backArrow: {
+    padding: 10,
+    backgroundColor: Colors.LIGHT_GRAY,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  errorContainer: {
+    marginTop: 3,
   },
 });

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StyleSheet } from "react-native";
 
 import SignUpItem from "./SignUpItem";
 import { authServices } from "../../../api/services/auth.service";
@@ -10,8 +9,8 @@ import { Status } from "../../../api/types/models";
 import { ErrorHandler } from "../../../config/ErrorHandler";
 import { useNotificatiom } from "../../../context/NotificationContext";
 import { useValidationInputs } from "../../../hooks/useValidationInputs";
-import { IErrors } from "../../../interfaces/IErrors";
 import { ISignup } from "../../../interfaces/ISignup";
+import { ISignupErrors } from "../../../interfaces/ISignupErrors";
 
 type Props = {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -26,11 +25,18 @@ const SignUp = (props: Props) => {
     jobTitle: "",
     notificationToken: "",
     profileUrl: "",
+    organizationName: "",
+    organizationEmail: "",
   });
-  const [errorsInput, setErrorsInput] = useState<IErrors>({
+  const [errorsInput, setErrorsInput] = useState<ISignupErrors>({
     emailErrors: [],
     passwordErrors: [],
+    fullNameErrors: [],
+    jobTitleErrors: [],
+    organizationNameErrors: [],
+    organizationEmailErrors: [],
   });
+  const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const { expoPushToken, error, notification } = useNotificatiom();
 
   function handleShowPassword() {
@@ -44,6 +50,17 @@ const SignUp = (props: Props) => {
     }
     if (key === "password")
       setErrorsInput({ ...errorsInput, passwordErrors: [] });
+    if (key === "fullName")
+      setErrorsInput({ ...errorsInput, fullNameErrors: [] });
+    if (key === "jobTitle")
+      setErrorsInput({ ...errorsInput, jobTitleErrors: [] });
+    if (key === "organizationName")
+      setErrorsInput({ ...errorsInput, organizationNameErrors: [] });
+    if (key === "organizationEmail") {
+      value = value.toLowerCase();
+      setErrorsInput({ ...errorsInput, organizationEmailErrors: [] });
+    }
+
     setSignupInputs({ ...signupInputs, [key]: value });
   }
 
@@ -51,32 +68,63 @@ const SignUp = (props: Props) => {
 
   async function submit() {
     if (isValid) {
+      setIsRegistering(true);
       try {
         const response = await authServices.register({
           ...signupInputs,
-          notificationToken: expoPushToken!,
+          notificationToken: expoPushToken! ? expoPushToken : "",
         });
         if (response.status === Status.SUCCESS) {
+          setIsRegistering(false);
           props.navigation.replace("SignIn");
         }
         console.log(response);
       } catch (error) {
+        setIsRegistering(true);
         console.log(error);
       }
     } else {
-      if (!ErrorHandler.validateEmail(signupInputs.email)) {
-        setErrorsInput({
-          ...errorsInput,
-          emailErrors: ErrorHandler.getErrors().emailErrors,
-        });
-      } else if (!ErrorHandler.validatePassword(signupInputs.password)) {
-        setErrorsInput({
-          ...errorsInput,
-          passwordErrors: ErrorHandler.getErrors().passwordErrors,
-        });
-      }
+      handleError();
     }
   }
+
+  const handleError = () => {
+    if (!ErrorHandler.validateEmail(signupInputs.email)) {
+      setErrorsInput({
+        ...errorsInput,
+        emailErrors: ErrorHandler.getErrors().errors.emailErrors,
+      });
+    } else if (!ErrorHandler.fullName(signupInputs.fullName)) {
+      setErrorsInput({
+        ...errorsInput,
+        fullNameErrors: ErrorHandler.getErrors().errors.fullNameErrors,
+      });
+    } else if (!ErrorHandler.validatePassword(signupInputs.password)) {
+      setErrorsInput({
+        ...errorsInput,
+        passwordErrors: ErrorHandler.getErrors().errors.passwordErrors,
+      });
+    } else if (!ErrorHandler.jobTitle(signupInputs.jobTitle)) {
+      setErrorsInput({
+        ...errorsInput,
+        jobTitleErrors: ErrorHandler.getErrors().errors.jobTitleErrors,
+      });
+    } else if (!ErrorHandler.organizationName(signupInputs.organizationName)) {
+      setErrorsInput({
+        ...errorsInput,
+        organizationNameErrors:
+          ErrorHandler.getErrors().errors.organizationNameErrors,
+      });
+    } else if (
+      !ErrorHandler.organizationEmail(signupInputs.organizationEmail)
+    ) {
+      setErrorsInput({
+        ...errorsInput,
+        organizationEmailErrors:
+          ErrorHandler.getErrors().errors.organizationEmailErrors,
+      });
+    }
+  };
 
   // console.log(JSON.stringify(notification, null, 2));
 
@@ -89,10 +137,9 @@ const SignUp = (props: Props) => {
       showPassword={showPassword}
       signinInputs={signupInputs}
       navigation={props.navigation}
+      isRegistering={isRegistering}
     />
   );
 };
 
 export default SignUp;
-
-const styles = StyleSheet.create({});
