@@ -3,15 +3,13 @@ import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import axios, { AxiosError, isAxiosError } from "axios";
+import { AxiosError, isAxiosError } from "axios";
 import { Alert } from "react-native";
 
 import SignInItem from "./SignInUI";
 import { authServices } from "../../../api/services/auth.service";
 import { JwtToken, Status, ErrorResponse } from "../../../api/types/models";
 import { ErrorHandler } from "../../../config/ErrorHandler";
-import { useValidationInputs } from "../../../hooks/useValidationInputs";
-import { IErrors } from "../../../interfaces/IErrors";
 import { ISignin } from "../../../interfaces/ISignin";
 
 type Props = {
@@ -25,13 +23,7 @@ const SignIn = (props: Props) => {
     email: "",
     password: "",
   });
-  const [errorsInput, setErrorsInput] = useState<IErrors>({
-    emailErrors: [],
-    passwordErrors: [],
-  });
-  const [error, setError] = useState<ErrorResponse | undefined>(undefined);
-
-  const { isValid } = useValidationInputs(signinInputs);
+  const [errorsInput, setErrorsInput] = useState<string[]>([]);
 
   function handleShowPassword() {
     setShowPassword(!showPassword);
@@ -39,16 +31,15 @@ const SignIn = (props: Props) => {
 
   function handleTextInput(key: string, value: string) {
     if (key === "email") {
-      setErrorsInput({ ...errorsInput, emailErrors: [] });
+      setErrorsInput([]);
       value = value.trim().toLowerCase();
     }
-    if (key === "password")
-      setErrorsInput({ ...errorsInput, passwordErrors: [] });
+
     setSigninInputs({ ...signinInputs, [key]: value });
   }
 
   const submit = async () => {
-    if (isValid) {
+    if (ErrorHandler.validateEmail(signinInputs.email)) {
       setIsLogin(true);
       try {
         const response = await authServices.login(signinInputs);
@@ -79,10 +70,7 @@ const SignIn = (props: Props) => {
     } else {
       setIsLogin(false);
       if (!ErrorHandler.validateEmail(signinInputs.email)) {
-        setErrorsInput({
-          ...errorsInput,
-          emailErrors: ErrorHandler.getErrors().emailErrors,
-        });
+        setErrorsInput([...ErrorHandler.getErrors().errors.emailErrors]);
       }
     }
   };

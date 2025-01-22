@@ -26,10 +26,7 @@ type Props = {
   submit: () => void;
   handleTextInput: (key: string, value: string) => void;
   signinInputs: ISignin;
-  errors: {
-    emailErrors: string[];
-    passwordErrors: string[];
-  };
+  errors: string[];
   navigation: NativeStackNavigationProp<ParamListBase>;
   isRefresh?: boolean;
 };
@@ -68,7 +65,7 @@ const SignInUI = ({
                   <View>
                     <Input
                       editable={!isRefresh}
-                      isError={errors.emailErrors.length > 0}
+                      isError={errors.length > 0}
                       title="Email address"
                       placeholder="Enter your email address"
                       value={signinInputs.email}
@@ -76,7 +73,7 @@ const SignInUI = ({
                     />
 
                     <View>
-                      {errors.emailErrors.map((error, index) => (
+                      {errors.map((error, index) => (
                         <Text key={index} style={{ color: Colors.RED }}>
                           {error}
                         </Text>
@@ -88,7 +85,6 @@ const SignInUI = ({
                   <View>
                     <Input
                       editable={!isRefresh}
-                      isError={errors.passwordErrors.length > 0}
                       value={signinInputs.password}
                       onChangeText={(value) =>
                         handleTextInput("password", value)
